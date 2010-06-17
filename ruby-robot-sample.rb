@@ -14,11 +14,9 @@ get '/' do
   'Ruby Wave Robot'
 end
 
-=begin
 get '/sample-robot/_wave/verify_token' do
-  'abcdefghijklmnopqrstuvwxyz'
+  'AOijR2faVHnuVwuPc7Tek3VG1yy7RDdK3N0a9HjMaQh0mNLf1xluUba4s4829ruM4SNgOfaAxuXodk5gFzNxHSmkV_T9hG3EINYkpegBjNk5YJXcGk8Gj0JqcbcfHhLfpnJvawVXEG-x_hevAWUfkcLhxJp-KuKi-Q=='
 end
-=end
 
 get '/sample-robot/_wave/robot/profile' do
   content_type :json
