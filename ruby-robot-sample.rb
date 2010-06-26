@@ -16,7 +16,10 @@ get '/' do
 end
 
 get '/sample-robot/_wave/verify_token' do
-  'AOijR2faVHnuVwuPc7Tek3VG1yy7RDdK3N0a9HjMaQh0mNLf1xluUba4s4829ruM4SNgOfaAxuXodk5gFzNxHSmkV_T9hG3EINYkpegBjNk5YJXcGk8Gj0JqcbcfHhLfpnJvawVXEG-x_hevAWUfkcLhxJp-KuKi-Q=='
+  'AOijR2faVHnuVwuPc7Tek3VG1yy7RDdK3N0a9HjMaQh' \
+  '0mNLf1xluUba4s4829ruM4SNgOfaAxuXodk5gFzNxHS' \
+  'mkV_T9hG3EINYkpegBjNk5YJXcGk8Gj0JqcbcfHhLfp' \
+  'nJvawVXEG-x_hevAWUfkcLhxJp-KuKi-Q=='
 end
 
 get '/sample-robot/_wave/robot/profile' do
@@ -30,7 +33,7 @@ get '/sample-robot/_wave/capabilities.xml' do
 end
 
 post '/sample-robot/_wave/robot/jsonrpc' do
-  body = requrest.body.read
+  body = request.body.read
   robot = Waveapi::Robot.new('Ruby Robot', :image_url => '', :profile_url => '')
   operation_bundle = robot.handle(body)
 
