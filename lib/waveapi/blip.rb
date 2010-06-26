@@ -1,6 +1,6 @@
 module Waveapi
   class Blip
-    def init(json)
+    def initialize(json)
       @raw_json = json
     end
   end

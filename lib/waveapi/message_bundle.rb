@@ -4,7 +4,7 @@ module Waveapi
   class MessageBundle
     attr_reader :raw_data, :events, :wavelet, :blips, :robot_address
 
-    def init(json_str)
+    def initialize(json_str)
       @raw_data = json_str
       @raw_json = JSON.parse(json_str).dup
 

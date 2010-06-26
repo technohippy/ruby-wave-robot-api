@@ -7,7 +7,7 @@ module Waveapi
   end
 
   class BlipSubmittedEvent < Event
-    def init(json)
+    def initialize(json)
       @raw_json = json
     end
   end

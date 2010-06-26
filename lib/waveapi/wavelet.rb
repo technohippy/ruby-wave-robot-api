@@ -1,6 +1,6 @@
 module Waveapi
   class Wavelet
-    def init(json)
+    def initialize(json)
       @raw_json = json
     end
   end
