@@ -1,12 +1,13 @@
 =begin
-Robot ID: ruby-wave-robot@googlewaverobots.com
-Robot Base URL: http://ruby-wave-robot.heroku.com/sample-robot
-Consumer Key: 728446359664
-Consumer Secret: I8W2DZs/XGV8jHR0btTWSsww
+Robot ID: ruby-wave-robot-api@googlewaverobots.com
+Robot Base URL: http://ruby-wave-robot-api.heroku.com/sample-robot
+Consumer Key: 175416260065
+Consumer Secret: q1ugdhhkNZHGKyJHG212apzS
 =end
 require 'rubygems'
 require 'sinatra'
 require 'erb'
+require 'waveapi'
 
 VERSION = 2
 
@@ -29,7 +30,11 @@ get '/sample-robot/_wave/capabilities.xml' do
 end
 
 post '/sample-robot/_wave/robot/jsonrpc' do
+  body = requrest.body.read
+  robot = Waveapi::Robot.new('Ruby Robot', :image_url => '', :profile_url => '')
+  operation_bundle = robot.handle(body)
+
   content_type :json
-  wave_id = $1 if request.body.read =~ /"waveId":"(.*?)"/
+  wave_id = $1 if body =~ /"waveId":"(.*?)"/
   erb :jsonrpc, {}, :wave_id => wave_id
 end

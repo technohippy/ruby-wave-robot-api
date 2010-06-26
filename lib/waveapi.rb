@@ -1,0 +1,5 @@
+require 'waveapi/robot'
+require 'waveapi/event'
+require 'waveapi/blip'
+require 'waveapi/wavelet'
+require 'waveapi/message_bundle'
