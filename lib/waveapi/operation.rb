@@ -148,7 +148,8 @@ module Waveapi
     end
 
     def to_json
-      @queue.to_json
+      @queue.map{|o| o.to_json}.to_json
+      #@queue.to_json
     end
   end
 end
