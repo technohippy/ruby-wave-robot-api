@@ -33,7 +33,9 @@ module Waveapi
           handler.call(event, wavelet)
         end
       end
-      @operation_bundle.json
+      ret = @operation_bundle.json
+      puts ret
+      ret
 
 
 =begin
