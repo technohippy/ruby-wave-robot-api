@@ -9,6 +9,7 @@ module Waveapi
 
     def self.build_from_json(json)
       class_name = json['type'].split('_').map{|e| e.capitalize}.join('') + 'Event'
+      puts "class name: #{class_name}"
       eval(class_name).new(json)
     end
 
