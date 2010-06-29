@@ -149,10 +149,10 @@ module Waveapi
 
     def <<(operation)
       operation.id = "op#{@queue.size + 1}"
+      @queue << operation
     end
 
     def to_json
-      #@queue.map{|o| o.to_json}.to_json
       @queue.to_json
     end
   end
