@@ -18,6 +18,8 @@ module Waveapi
       "name=\"#{type}\""
     end
 
+    attr_reader :raw_json, :modified_by, :timestamp, :type, :properties, :blip_id, :blip, :proxying_for
+
     def initialize(json, blips=[])
       @raw_json = json
       @modified_by = json['modifiedBy']

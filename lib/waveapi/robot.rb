@@ -67,6 +67,7 @@ module Waveapi
           hs.map{|h| "  <w:capability #{e.type_attr} #{h.opt_attrs}/>"}.join("\n")
         end.join("\n")
       tail = <<-EOS
+
 </w:capabilities>
 </w:robot>
       EOS
