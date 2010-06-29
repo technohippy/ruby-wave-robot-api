@@ -28,12 +28,11 @@ module Waveapi
 
       wavelet = message_bundle.wavelet
       message_bundle.events.each do |event|
-        handlers = @event_table[event.class]
+        handlers = @event_table[event.class] || []
         handlers.each do |handler|
           handler.call(event, wavelet)
         end
       end
-      content_type :json
       @operation_bundle.json
 
 
