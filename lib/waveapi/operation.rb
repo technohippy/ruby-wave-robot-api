@@ -29,7 +29,7 @@ module Waveapi
     end
 
     def json
-      JSON.generate(hash)
+      hash.to_json
     end
   end
 
@@ -152,7 +152,7 @@ module Waveapi
     end
 
     def json
-      JSON.generate(@queue)
+      @queue.to_json
     end
   end
 end
