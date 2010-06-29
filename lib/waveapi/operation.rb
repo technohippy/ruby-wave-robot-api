@@ -27,6 +27,10 @@ module Waveapi
         "params" => params
       }
     end
+
+    def to_json
+      self.to_hash.to_json
+    end
   end
 
   class WaveletAppendBlipOperation < Operation
@@ -148,8 +152,8 @@ module Waveapi
     end
 
     def to_json
-      @queue.map{|o| o.to_json}.to_json
-      #@queue.to_json
+      #@queue.map{|o| o.to_json}.to_json
+      @queue.to_json
     end
   end
 end
