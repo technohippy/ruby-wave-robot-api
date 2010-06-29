@@ -42,8 +42,12 @@ module Waveapi
       "WAVELET_PARTICIPANTS_CHANGED"
     end
 
+    attr_reader :participants_added, :participants_removed
+
     def initialize(json)
       @raw_json = json
+      @participants_added = json["participantsAdded"]
+      @participants_removed = json["participantsRemoved"]
     end
   end
 
