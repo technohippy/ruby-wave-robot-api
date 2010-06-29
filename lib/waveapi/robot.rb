@@ -33,7 +33,7 @@ module Waveapi
           handler.call(event, wavelet)
         end
       end
-      ret = @operation_bundle.json
+      ret = @operation_bundle.to_json
       puts ret
       ret
 
