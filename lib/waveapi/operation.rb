@@ -56,8 +56,17 @@ module Waveapi
   end
 
   class WaveletSetTitleOperation < Operation
-    def initialize
+    def initialize(title)
       @method = 'wavelet.setTitle'
+      @title = title
+    end
+
+    def params
+      {
+        "waveletId" => "wavesandbox.com!conv+root",
+        "waveId" => @wave_id,
+        "title" => @title
+      }
     end
   end
 

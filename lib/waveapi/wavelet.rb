@@ -21,6 +21,10 @@ module Waveapi
       #@root_blip = 
     end
 
+    def title=(title)
+      @robot.add_operation(WaveletSetTitleOperation.new(title))
+    end
+
     def reply(message)
       @robot.add_operation(WaveletAppendBlipOperation.new(@wave_id, message))
     end

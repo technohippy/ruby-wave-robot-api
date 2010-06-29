@@ -1,20 +1,32 @@
 module Waveapi
   class Event
-    ALL = 'ALL'
-    PARENT = 'PARENT'
-    CHILDREN = 'CHILDREN'
-    SIBLINGS = 'SIBLINGS'
-    SELF = 'SELF'
-    ROOT = 'ROOT'
+    module Context
+      ALL = 'ALL'
+      PARENT = 'PARENT'
+      CHILDREN = 'CHILDREN'
+      SIBLINGS = 'SIBLINGS'
+      SELF = 'SELF'
+      ROOT = 'ROOT'
+    end
 
-    def self.build_from_json(json)
+    def self.build(json, blips=[])
       class_name = json['type'].split('_').map{|e| e.capitalize}.join('') + 'Event'
-      puts "class name: #{class_name}"
-      eval(class_name).new(json)
+      eval(class_name).new(json, blips)
     end
 
     def self.type_attr
       "name=\"#{type}\""
+    end
+
+    def initialize(json, blips=[])
+      @raw_json = json
+      @modified_by = json['modifiedBy']
+      @timestamp = json['timestamp'] || 0
+      @type = json['type']
+      @properties = json['properties']
+      @blip_id = @properties['blipId']
+      @blip = blips.find{|b| b.id == @blip_id}
+      @proxying_for = json['proxyingFor']
     end
   end
 
@@ -23,8 +35,8 @@ module Waveapi
       "WAVELET_BLIP_CREATED"
     end
 
-    def initialize(json)
-      @raw_json = json
+    def initialize(json, blips=[])
+      super
     end
   end
 
@@ -33,8 +45,8 @@ module Waveapi
       "WAVELET_BLIP_REMOVED"
     end
 
-    def initialize(json)
-      @raw_json = json
+    def initialize(json, blips=[])
+      super
     end
   end
 
@@ -45,10 +57,10 @@ module Waveapi
 
     attr_reader :participants_added, :participants_removed
 
-    def initialize(json)
-      @raw_json = json
-      @participants_added = json["properties"]["participantsAdded"]
-      @participants_removed = json["properties"]["participantsRemoved"]
+    def initialize(json, blips=[])
+      super
+      @participants_added = @properties['participantsAdded'] || []
+      @participants_removed = @properties['participantsRemoved'] || []
     end
   end
 
@@ -57,8 +69,8 @@ module Waveapi
       "WAVELET_SELF_ADDED"
     end
 
-    def initialize(json)
-      @raw_json = json
+    def initialize(json, blips=[])
+      super
     end
   end
 
@@ -67,8 +79,8 @@ module Waveapi
       "WAVELET_SELF_REMOVED"
     end
 
-    def initialize(json)
-      @raw_json = json
+    def initialize(json, blips=[])
+      super
     end
   end
 
@@ -77,8 +89,8 @@ module Waveapi
       "WAVELET_TAGS_CHANGED"
     end
 
-    def initialize(json)
-      @raw_json = json
+    def initialize(json, blips=[])
+      super
     end
   end
 
@@ -87,8 +99,8 @@ module Waveapi
       "WAVELET_TITLE_CHANGED"
     end
 
-    def initialize(json)
-      @raw_json = json
+    def initialize(json, blips=[])
+      super
     end
   end
 
@@ -97,8 +109,8 @@ module Waveapi
       "BLIP_CONTRIBUTOR_CHANGED"
     end
 
-    def initialize(json)
-      @raw_json = json
+    def initialize(json, blips=[])
+      super
     end
   end
 
@@ -107,8 +119,8 @@ module Waveapi
     "BLIP_SUBMITTED"
     end
 
-    def initialize(json)
-      @raw_json = json
+    def initialize(json, blips=[])
+      super
     end
   end
 
@@ -117,8 +129,8 @@ module Waveapi
       "DOCUMENT_CHANGED"
     end
 
-    def initialize(json)
-      @raw_json = json
+    def initialize(json, blips=[])
+      super
     end
   end
 
@@ -127,8 +139,8 @@ module Waveapi
       "FORM_BUTTON_CLICKED"
     end
 
-    def initialize(json)
-      @raw_json = json
+    def initialize(json, blips=[])
+      super
     end
   end
 
@@ -137,8 +149,8 @@ module Waveapi
       "GADGET_STATE_CHANGED"
     end
 
-    def initialize(json)
-      @raw_json = json
+    def initialize(json, blips=[])
+      super
     end
   end
 
@@ -147,8 +159,8 @@ module Waveapi
       "ANNOTATED_TEXT_CHANGED"
     end
 
-    def initialize(json)
-      @raw_json = json
+    def initialize(json, blips=[])
+      super
     end
   end
 end
