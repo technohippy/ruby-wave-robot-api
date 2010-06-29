@@ -20,16 +20,12 @@ module Waveapi
   class Operation
     attr_accessor :id
 
-    def hash
+    def to_hash
       {
         "id" => @id,
         "method" => @method,
         "params" => params
       }
-    end
-
-    def json
-      hash.to_json
     end
   end
 
@@ -151,7 +147,7 @@ module Waveapi
       operation.id = "op#{@queue.size + 1}"
     end
 
-    def json
+    def to_json
       @queue.to_json
     end
   end
