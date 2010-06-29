@@ -18,6 +18,7 @@ robot.register_handler(Waveapi::WaveletSelfAddedEvent) do |event, wavelet|
 end
 
 robot.register_handler(Waveapi::WaveletParticipantsChangedEvent) do |event, wavelet|
+  puts "event: #{event}"
   new_participants = event.participants_added
   new_participants.each do |new_participant|
     wavelet.reply("\nHi : #{new_participant}")

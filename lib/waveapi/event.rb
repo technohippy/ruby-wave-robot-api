@@ -47,8 +47,8 @@ module Waveapi
 
     def initialize(json)
       @raw_json = json
-      @participants_added = json["participantsAdded"]
-      @participants_removed = json["participantsRemoved"]
+      @participants_added = json["properties"]["participantsAdded"]
+      @participants_removed = json["properties"]["participantsRemoved"]
     end
   end
 
