@@ -1,3 +1,5 @@
+require 'json'
+
 module Waveapi
   # Operation Types
   WAVELET_APPEND_BLIP = 'wavelet.appendBlip'
@@ -147,6 +149,10 @@ module Waveapi
 
     def <<(operation)
       operation.id = "op#{@queue.size + 1}"
+    end
+
+    def json
+      JSON.generate(@queue)
     end
   end
 end
