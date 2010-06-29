@@ -27,7 +27,7 @@ module Waveapi
       @type = json['type']
       @properties = json['properties']
       @blip_id = @properties['blipId']
-      @blip = blips.find{|b| b.id == @blip_id}
+      #@blip = blips.find{|b| b.id == @blip_id}
       @proxying_for = json['proxyingFor']
     end
   end
