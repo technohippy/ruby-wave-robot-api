@@ -15,29 +15,14 @@ get '/' do
   'Ruby Wave Robot'
 end
 
-get '/sample-robot/_wave/verify_token' do
-  'AOijR2faVHnuVwuPc7Tek3VG1yy7RDdK3N0a9HjMaQh' \
-  '0mNLf1xluUba4s4829ruM4SNgOfaAxuXodk5gFzNxHS' \
-  'mkV_T9hG3EINYkpegBjNk5YJXcGk8Gj0JqcbcfHhLfp' \
-  'nJvawVXEG-x_hevAWUfkcLhxJp-KuKi-Q=='
+robot = Waveapi::Robot.new(
+  'Ruby Robot', 
+  :base_url => '/sample-robot', 
+  :image_url => 'http://ruby-wave-robot.heroku.com/images/icon.png',
+  :profile_url => 'http://ruby-wave-robot-api.heroku.com'
+)
+robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
+  wavelet.reply("Hi, I'm Ruby Robot.")
 end
 
-get '/sample-robot/_wave/robot/profile' do
-  content_type :json
-  erb :profile
-end
-
-get '/sample-robot/_wave/capabilities.xml' do
-  content_type :xml
-  erb :capabilities
-end
-
-post '/sample-robot/_wave/robot/jsonrpc' do
-  body = request.body.read
-  robot = Waveapi::Robot.new('Ruby Robot', :image_url => '', :profile_url => '')
-  operation_bundle = robot.handle(body)
-
-  content_type :json
-  wave_id = $1 if body =~ /"waveId":"(.*?)"/
-  erb :jsonrpc, {}, :wave_id => wave_id
-end
+robot.start
