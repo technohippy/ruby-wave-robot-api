@@ -83,6 +83,8 @@ module Waveapi
     end
 
     def start_on_sinatra
+      require 'sinatra'
+
       robot = self
 
       get "#{@base_url}/_wave/verify_token" do

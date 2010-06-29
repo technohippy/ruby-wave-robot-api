@@ -12,6 +12,7 @@ robot = Waveapi::Robot.new(
   :image_url => 'http://ruby-wave-robot.heroku.com/images/icon.png',
   :profile_url => 'http://ruby-wave-robot-api.heroku.com'
 )
+
 robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
   wavelet.reply("Hi, I'm Ruby Robot.")
 end
