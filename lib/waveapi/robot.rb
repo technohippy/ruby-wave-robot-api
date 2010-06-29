@@ -23,7 +23,6 @@ module Waveapi
 
     def handle(json_str)
       @operation_bundle = OperationBundle.new(capabilities_hash)
-
       message_bundle = MessageBundle.new(json_str, self)
 
       wavelet = message_bundle.wavelet
@@ -33,16 +32,8 @@ module Waveapi
           handler.call(event, wavelet)
         end
       end
-      ret = @operation_bundle.to_json
-      puts ret
-      ret
 
-
-=begin
-      content_type :json
-      wave_id = $1 if body =~ /"waveId":"(.*?)"/
-      erb :jsonrpc, {}, :wave_id => wave_id
-=end
+      @operation_bundle.to_json
     end
 
     def register_handler(event_class, opts={}, &block)
