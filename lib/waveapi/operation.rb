@@ -56,8 +56,9 @@ module Waveapi
   end
 
   class WaveletSetTitleOperation < Operation
-    def initialize(title)
+    def initialize(wave_id, title)
       @method = 'wavelet.setTitle'
+      @wave_id = wave_id
       @title = title
     end
 

@@ -22,7 +22,7 @@ module Waveapi
     end
 
     def title=(title)
-      @robot.add_operation(WaveletSetTitleOperation.new(title))
+      @robot.add_operation(WaveletSetTitleOperation.new(@wave_id, title))
     end
 
     def reply(message)
