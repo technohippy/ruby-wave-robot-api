@@ -66,7 +66,7 @@ module Waveapi
       {
         "waveletId" => "wavesandbox.com!conv+root",
         "waveId" => @wave_id,
-        "title" => @title
+        "waveletTitle" => @title
       }
     end
   end
