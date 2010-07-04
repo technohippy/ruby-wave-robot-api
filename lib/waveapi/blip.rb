@@ -1,3 +1,4 @@
+require 'waveapi/element'
 require 'waveapi/util'
 
 module Waveapi
