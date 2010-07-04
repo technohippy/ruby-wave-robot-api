@@ -216,6 +216,7 @@ module Waveapi
     end
 
     def <<(operation)
+      puts ">>>>> add operation"
       operation.id = "op#{@queue.size + 1}"
       @queue << operation
     end
