@@ -50,7 +50,7 @@ module Waveapi
       @wave_id = wave_id
       @wavelet_id = 'wavesandbox.com!conv+root'
       @message = message
-      @blip_data = new_blipdata(@wave_id, @wavelet_id, @message, nil)
+      @blip_data = new_blip_data(@wave_id, @wavelet_id, @message, nil)
     end
 
     def params
@@ -109,7 +109,7 @@ module Waveapi
       @method = 'blip.createChild'
       @wave_id = wave_id
       @wavelet_id = wavelet_id
-      @blip_data = new_blipdata(wave_id, wavelet_id, '', parent_blip_id)
+      @blip_data = new_blip_data(wave_id, wavelet_id, '', parent_blip_id)
     end
 
     def params
@@ -151,7 +151,7 @@ module Waveapi
 
     def initialize(wave_id, wavelet_id, parent_blip_id, position)
       @method = 'document.inlineBlip.insert'
-      @inline_blip_data = new_blipdata(wave_id, wavelet_id, '', blip_id)
+      @inline_blip_data = new_blip_data(wave_id, wavelet_id, '', blip_id)
       @position = position
     end
 
