@@ -8,6 +8,7 @@ module Waveapi
     def initialize(json_str, operation_bundle)
       @context = Context.new(self, operation_bundle)
       @raw_data = json_str
+      puts '---- INPUT'
       puts @raw_data
       @raw_json = JSON.parse(json_str).dup
       @robot_address = @raw_json['robotAddress']

@@ -33,6 +33,7 @@ module Waveapi
         end
       end
 
+      puts '---- OUTPUT'
       puts @operation_bundle.to_json # TODO: for debug
       @operation_bundle.to_json
     end
