@@ -20,11 +20,11 @@ module Waveapi
     end
 
     def find_blip_by_id(blip_id)
-      blips.find{|b| b.id == blip_id}
+      @message_bundle.blips[blip_id]
     end
 
     def add_blip(blip)
-      @message_bundle.blips << blip
+      @message_bundle.blips << blip #error
     end
 
     def add_operation(operation)
