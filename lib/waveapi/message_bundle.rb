@@ -1,4 +1,5 @@
 require 'json'
+require 'waveapi/event'
 require 'waveapi/context'
 
 module Waveapi
@@ -23,7 +24,7 @@ module Waveapi
     end
 
     def events
-      @events ||= (@raw_json['events'] || []).map{|json| Blip.new(json, @context)}
+      @events ||= (@raw_json['events'] || []).map{|json| Event.build(json, @context)}
     end
   end
 end
