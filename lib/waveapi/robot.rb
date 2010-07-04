@@ -3,6 +3,7 @@ require 'json'
 require 'waveapi/message_bundle'
 require 'waveapi/operation'
 require 'waveapi/handler'
+require 'waveapi/context'
 
 module Waveapi
   class Robot
@@ -18,9 +19,8 @@ module Waveapi
     end
 
     def handle(json_str)
-      puts "---- INPUT#{json_str}"
-      @operation_bundle = OperationBundle.new(capabilities_hash)
-      message_bundle = MessageBundle.new(json_str, @operation_bundle)
+      puts "---- INPUT\n#{json_str}"
+      @context = Context.new(json_str, capabilities_hash)
 
       wavelet = message_bundle.wavelet
       message_bundle.events.each do |event|
@@ -30,8 +30,8 @@ module Waveapi
         end
       end
 
-      puts "---- OUTPUT\n#{@operation_bundle.to_json}"
-      @operation_bundle.to_json
+      puts "---- OUTPUT\n#{@context.operation_bundle.to_json}"
+      @context.operation_bundle.to_json
     end
 
     def register_handler(event_class, opts={}, &block)
