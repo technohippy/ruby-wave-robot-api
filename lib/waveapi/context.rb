@@ -28,7 +28,6 @@ module Waveapi
     end
 
     def add_operation(operation)
-      puts ">>>>>> Context#add_operation"
       @operation_bundle << operation
     end
   end

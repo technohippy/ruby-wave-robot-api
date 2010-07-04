@@ -24,9 +24,7 @@ module Waveapi
 
       wavelet = @context.message_bundle.wavelet
       @context.message_bundle.events.each do |event|
-        puts "event class: #{event.class.name}"
         handlers = @event_table[event.class] || []
-        puts "handlers.size: #{handlers.size}"
         handlers.each do |handler|
           handler.call(event, wavelet)
         end
