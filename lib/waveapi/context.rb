@@ -2,7 +2,7 @@ module Waveapi
   class Context
     attr_reader :message_bundle, :operation_bundle
 
-    def initialize(json_srt, capabilities_hash)
+    def initialize(json_str, capabilities_hash)
       @message_bundle = MessageBundle.new(json_str, self)
       @operation_bundle = OperationBundle.new(capabilities_hash)
     end
