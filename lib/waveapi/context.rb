@@ -3,7 +3,7 @@ require 'waveapi/operation'
 
 module Waveapi
   class Context
-    attr_reader :message_bundle, :operation_bundle
+    attr_accessor :message_bundle, :operation_bundle
 
     def initialize(json_str, capabilities_hash)
       #@message_bundle = MessageBundle.new(json_str, self)
