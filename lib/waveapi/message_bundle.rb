@@ -15,7 +15,7 @@ module Waveapi
     end
 
     def blips
-      @blips ||= (@raw_json['blips'] || []).map{|json| Blip.new(json, @context)}
+      @blips ||= (@raw_json['blips'] || {}).map{|bid, json| Blip.new(json, @context)}
     end
 
     def events
