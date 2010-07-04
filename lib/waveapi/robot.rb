@@ -22,8 +22,8 @@ module Waveapi
       puts "---- INPUT\n#{json_str}"
       @context = Context.new(json_str, capabilities_hash)
 
-      wavelet = message_bundle.wavelet
-      message_bundle.events.each do |event|
+      wavelet = @context.message_bundle.wavelet
+      @context.message_bundle.events.each do |event|
         handlers = @event_table[event.class] || []
         handlers.each do |handler|
           handler.call(event, wavelet)
