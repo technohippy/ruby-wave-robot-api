@@ -1,5 +1,5 @@
-require 'message_bundle'
-require 'operation_bundle'
+require 'waveapi/message_bundle'
+require 'waveapi/operation_bundle'
 
 module Waveapi
   class Context
