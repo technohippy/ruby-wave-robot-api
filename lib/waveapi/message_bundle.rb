@@ -7,6 +7,7 @@ module Waveapi
 
     def initialize(json_str, context)
       @context = context
+      @context.message_bundle = self
       @raw_data = json_str
       @raw_json = JSON.parse(json_str).dup
       @robot_address = @raw_json['robotAddress']
