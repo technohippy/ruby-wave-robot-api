@@ -32,7 +32,7 @@ module Waveapi
       type = json['type']
       props = json['properties']
       element_classes = Element.subclasses
-      element_class = element_classes.find(|cls| cls.class_type == type)
+      element_class = element_classes.find{|cls| cls.class_type == type}
       if element_class
         element_class.from_props(props)
       else
