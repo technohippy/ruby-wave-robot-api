@@ -23,7 +23,7 @@ module Waveapi
 
     def handle(json_str)
       @operation_bundle = OperationBundle.new(capabilities_hash)
-      message_bundle = MessageBundle.new(json_str, self)
+      message_bundle = MessageBundle.new(json_str, @operation_bundle)
 
       wavelet = message_bundle.wavelet
       message_bundle.events.each do |event|
@@ -33,7 +33,7 @@ module Waveapi
         end
       end
 
-      puts @operation_bundle.to_json
+      puts @operation_bundle.to_json # TODO: for debug
       @operation_bundle.to_json
     end
 

@@ -4,9 +4,9 @@ module Waveapi
   class Wavelet
     attr_accessor :blips
 
-    def initialize(robot, blips, json)
-      @robot = robot
-      @blips = blips
+    def initialize(json, context)
+      @context = context
+      @blips = @context.blips
       @raw_json = json
       @wave_id = json['waveId']
       @wavelet_id = json['waveletId']

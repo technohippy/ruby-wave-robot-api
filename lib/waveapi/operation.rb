@@ -20,6 +20,17 @@ module Waveapi
   class Operation
     attr_accessor :id
 
+    def new_blip_data(wave_id, wavelet_id, initial_content, parent_blip_id)
+      temp_blip_id = "TBD_#{wavelet_id}_#{rand(100000).to_s(16)}"
+      {
+        'waveId' => wave_id,
+        'waveletId' => wavelet_id,
+        'blipId' => temp_blip_id,
+        'content' => initial_content,
+        'parentBlipId' => parent_blip_id
+      }
+    end
+
     def to_hash
       {
         "id" => @id,
@@ -37,20 +48,16 @@ module Waveapi
     def initialize(wave_id, message)
       @method = 'wavelet.appendBlip'
       @wave_id = wave_id
+      @wavelet_id = 'wavesandbox.com!conv+root'
       @message = message
+      @blip_data = new_blipdata(@wave_id, @wavelet_id, @message, nil)
     end
 
     def params
       {
-        "waveletId" => "wavesandbox.com!conv+root",
+        "waveletId" => @wavelet_id,
         "waveId" => @wave_id,
-        "blipData" => {
-          "waveletId" => "wavesandbox.com!conv+root",
-          "blipId" => "TBD_wavesandbox.com!conv+root_#{rand}",
-          "waveId" => @wave_id,
-          "content" => @message,
-          "parentBlipId" => nil
-        }
+        "blipData" => @blip_data
       }
     end
   end
@@ -96,8 +103,21 @@ module Waveapi
   end
 
   class BlipCreateChildOperation < Operation
-    def initialize
+    attr_reader :blip_data
+
+    def initialize(wave_id, wavelet_id, parent_blip_id)
       @method = 'blip.createChild'
+      @wave_id = wave_id
+      @wavelet_id = wavelet_id
+      @blip_data = new_blipdata(wave_id, wavelet_id, '', parent_blip_id)
+    end
+
+    def params
+      {
+        "waveletId" => @wavelet_id,
+        "waveId" => @wave_id,
+        "blipData" => @blip_data
+      }
     end
   end
 
@@ -108,14 +128,41 @@ module Waveapi
   end
 
   class DocumentAppendMarkupOperation < Operation
-    def initialize
+    def initialize(wave_id, wavelet_id, blip_id, content)
       @method = 'document.appendMarkup'
+      @wave_id = wave_id
+      @wavelet_id = wavelet_id
+      @blip_id = blip_id
+      @content = content
+    end
+
+    def params
+      {
+        'waveId' => @wave_id,
+        'waveletId' => @wavelet_id,
+        'blipId' => @blip_id,
+        'content' => @content
+      }
     end
   end
 
   class DocumentInlineBlipInsertOperation < Operation
-    def initialize
+    attr_reader :inline_blip_data
+
+    def initialize(wave_id, wavelet_id, parent_blip_id, position)
       @method = 'document.inlineBlip.insert'
+      @inline_blip_data = new_blipdata(wave_id, wavelet_id, '', blip_id)
+      @position = position
+    end
+
+    def params
+      {
+        'waveId' => @wave_id,
+        'waveletId' => @wavelet_id,
+        'blipId' => @blip_id,
+        'index' => @positioin,
+        'blipData' => @inline_blip_data
+      }
     end
   end
 
@@ -153,8 +200,18 @@ module Waveapi
   end
 
   class OperationBundle
+    attr_accessor :queue, :capabilities_hash, :proxy_for_id
+
     def initialize(capabilities_hash)
       @queue = [RobotNotifyCapabilitiesHashOperation.new(capabilities_hash)]
+      @capabilities_hash = capabilities_hash
+    end
+
+    def proxy_for(proxy_for_id)
+      res = self.new(@capabilities_hash)
+      res.queue = @queue.dup
+      res.proxy_for_id = proxy_for_id
+      res
     end
 
     def <<(operation)

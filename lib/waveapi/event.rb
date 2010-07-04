@@ -1,17 +1,15 @@
 module Waveapi
   class Event
-    module Context
-      ALL = 'ALL'
-      PARENT = 'PARENT'
-      CHILDREN = 'CHILDREN'
-      SIBLINGS = 'SIBLINGS'
-      SELF = 'SELF'
-      ROOT = 'ROOT'
-    end
+    CONTEXT_ALL = 'ALL'
+    CONTEXT_PARENT = 'PARENT'
+    CONTEXT_CHILDREN = 'CHILDREN'
+    CONTEXT_SIBLINGS = 'SIBLINGS'
+    CONTEXT_SELF = 'SELF'
+    CONTEXT_ROOT = 'ROOT'
 
-    def self.build(json, blips=[])
+    def self.build(json, context)
       class_name = json['type'].split('_').map{|e| e.capitalize}.join('') + 'Event'
-      eval(class_name).new(json, blips)
+      eval(class_name).new(json, context)
     end
 
     def self.type_attr
@@ -20,14 +18,14 @@ module Waveapi
 
     attr_reader :raw_json, :modified_by, :timestamp, :type, :properties, :blip_id, :blip, :proxying_for
 
-    def initialize(json, blips=[])
+    def initialize(json, context=nil)
       @raw_json = json
       @modified_by = json['modifiedBy']
       @timestamp = json['timestamp'] || 0
       @type = json['type']
       @properties = json['properties']
       @blip_id = @properties['blipId']
-      #@blip = blips.find{|b| b.id == @blip_id}
+      @blip = context.find_blip_by_id(@blip_id)
       @proxying_for = json['proxyingFor']
     end
   end
