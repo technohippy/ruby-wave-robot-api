@@ -23,6 +23,7 @@ module Waveapi
       @context = Context.new(json_str, capabilities_hash)
 
       wavelet = @context.message_bundle.wavelet
+      puts ">>> size: #{@context.message_bundle.events.size}"
       @context.message_bundle.events.each do |event|
         handlers = @event_table[event.class] || []
         handlers.each do |handler|
