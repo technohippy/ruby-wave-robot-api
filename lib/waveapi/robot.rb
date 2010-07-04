@@ -17,11 +17,8 @@ module Waveapi
       @event_table = {}
     end
 
-    def add_operation(operation)
-      @operation_bundle << operation
-    end
-
     def handle(json_str)
+      puts "---- INPUT#{json_str}"
       @operation_bundle = OperationBundle.new(capabilities_hash)
       message_bundle = MessageBundle.new(json_str, @operation_bundle)
 
@@ -33,8 +30,7 @@ module Waveapi
         end
       end
 
-      puts '---- OUTPUT'
-      puts @operation_bundle.to_json # TODO: for debug
+      puts "---- OUTPUT\n#{@operation_bundle.to_json}"
       @operation_bundle.to_json
     end
 
