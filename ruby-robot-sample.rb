@@ -31,9 +31,7 @@ end
 robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
   blip = event.blip
   wavelet.title = 'A wavelet title'
-  blip.append(Waveapi::Image.new(
-    :url => 'http://www.google.com/logos/clickortreat1.gif',
-    :width => 320, :height => 118))
+  blip.append(Waveapi::Image.new('http://www.google.com/logos/clickortreat1.gif', 320, 118))
 =begin
 [
   {
