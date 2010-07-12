@@ -116,7 +116,7 @@ module Waveapi
   end
 
   class Blip
-    attr_reader :blip_id, :wave_id, :wavelet_id, :child_blip_ids, :contributors, :creator, :last_modified_time, :version, :parent_blip_id, :annotations
+    attr_reader :blip_id, :wave_id, :wavelet_id, :child_blip_ids, :contributors, :creator, :last_modified_time, :version, :parent_blip_id, :annotations, :context
 
     def initialize(json, context)
       @context = context
