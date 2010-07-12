@@ -203,7 +203,7 @@ module Waveapi
       BlipRefs.range(stop.nil? ? range_or_start : (range_or_start..stop))
     end
 
-    def to_hash
+    def to_hashmap
       {
         'blipId' => @blip_id,
         'childBlipIds' => @child_blip_ids,
@@ -215,8 +215,8 @@ module Waveapi
         'parentBlipId' => @parent_blip_id,
         'waveId' => @wave_id,
         'waveletId' => @wavelet_id,
-        'annotations' => @annotations.to_hash,
-        'elements' => @elements.inject([]){|ary, e| ary << [ary.size, e.to_hash]}
+        'annotations' => @annotations.to_hashmap,
+        'elements' => @elements.inject([]){|ary, e| ary << [ary.size, e.to_hashmap]}
       }
     end
 

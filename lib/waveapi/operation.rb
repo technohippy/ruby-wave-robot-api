@@ -31,7 +31,7 @@ module Waveapi
       }
     end
 
-    def to_hash
+    def to_hashmap
       {
         "id" => @id,
         "method" => @method,
@@ -40,7 +40,7 @@ module Waveapi
     end
 
     def to_json
-      self.to_hash.to_json
+      self.to_hashmap.to_json
     end
   end
 
@@ -180,7 +180,7 @@ module Waveapi
         'waveId' => @wave_id,
         'waveletId' => @wavelet_id,
         'blipId' => @blip_id,
-        'modifyAction' => @modify_action.to_hash
+        'modifyAction' => @modify_action.to_hashmap
       }
     end
   end
@@ -261,18 +261,18 @@ module Waveapi
       end
     end
 
-    def to_hash
+    def to_hashmap
       hash = {'modifyHow' => @modify_how}
       if @elements
-        hash['elements'] = @elements.map{|e| e.to_hash}
+        hash['elements'] = @elements.map{|e| e.to_hashmap}
       elsif @values
-        hash['values'] = @values.map{|v| v.to_hash}
+        hash['values'] = @values.map{|v| v.to_hashmap}
       end
       hash
     end
 
     def to_json
-      self.to_hash.to_json
+      self.to_hashmap.to_json
     end
   end
 end

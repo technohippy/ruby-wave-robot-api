@@ -1,3 +1,9 @@
+class Object
+  def to_hashmap
+    self
+  end
+end
+
 module Waveapi
   module Util
     def parse_markup(markup)

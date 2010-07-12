@@ -1,3 +1,4 @@
+require 'waveapi/util'
 require 'waveapi/robot'
 require 'waveapi/operation'
 require 'waveapi/event'
