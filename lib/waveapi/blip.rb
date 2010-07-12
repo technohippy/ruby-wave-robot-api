@@ -71,7 +71,7 @@ module Waveapi
     def insert_after(what, bundled_annotations=nil)
       #execute(INSERT_AFTER, what, bundled_annotations)
       modify_action = ModifyAction.new(ModifyAction::INSERT_AFTER, what)
-      operation = DocumentModifyOperation.new(@wave_id, @wavelet_id, @blip_id, modify_action)
+      operation = DocumentModifyOperation.new(@blip.wave_id, @blip.wavelet_id, @blip.blip_id, modify_action)
       @context.add_operation(operation)
     end
 

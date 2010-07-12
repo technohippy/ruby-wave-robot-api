@@ -264,6 +264,7 @@ module Waveapi
       elsif @values
         hash['values'] = @values.map{|v| v.to_hash}
       end
+      hash
     end
 
     def to_json
