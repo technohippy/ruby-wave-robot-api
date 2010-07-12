@@ -33,7 +33,7 @@ robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
   blip.append('hello')
   #wavelet.title = 'A wavelet title'
   #blip.append(Waveapi::Image.new('http://www.google.com/logos/clickortreat1.gif', 320, 118))
-  wavelet.proxy_for('douwe').reply().append('hi from douwe')
+  #wavelet.proxy_for('douwe').reply().append('hi from douwe')
 =begin
   inline_blip = blip.insert_inline_blip(5)
   inline_blip.append('hello again!')
