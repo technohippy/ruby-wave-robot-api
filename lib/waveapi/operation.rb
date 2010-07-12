@@ -174,6 +174,15 @@ module Waveapi
       @blip_id = blip_id
       @modify_action = modify_action
     end
+
+    def params
+      {
+        'waveId' => @wave_id,
+        'waveletId' => @wavelet_id,
+        'blipId' => @blip_id,
+        'modifyAction' => @modify_action
+      }
+    end
   end
 
   class RobotCreateWaveletOperation < Operation
