@@ -180,7 +180,7 @@ module Waveapi
         'waveId' => @wave_id,
         'waveletId' => @wavelet_id,
         'blipId' => @blip_id,
-        'modifyAction' => @modify_action
+        'modifyAction' => @modify_action.to_hash
       }
     end
   end
