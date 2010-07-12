@@ -40,11 +40,15 @@ module Waveapi
       end
     end
 
-    def to_json
+    def to_hash
       {
         'type' => @type,
         'properties' => @properties.reject{|k, v| v.nil?}
-      }.to_json
+      }
+    end
+
+    def to_json
+      self.to_hash.to_json
     end
 
     def method_missing(name, *args, &block)

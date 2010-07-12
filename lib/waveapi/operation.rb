@@ -247,6 +247,10 @@ module Waveapi
     CLEAR_ANNOTATION = 'CLEAR_ANNOTATION'
     UPDATE_ELEMENT = 'UPDATE_ELEMENT'
 
+    def self.insert_after(elements)
+      self.new(INSERT_AFTER, elements)
+    end
+
     def initialize(modify_how, elements)
       @modify_how = modify_how
       elements = [elements] unless elements.is_a?(Array)
