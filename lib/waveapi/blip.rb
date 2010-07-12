@@ -16,6 +16,7 @@ module Waveapi
     def initialize(blip, maxres=1)
       @blip = blip
       @maxres = maxres
+      @context = blip.context
     end
 
     def self.all(blip, findwhat, maxres=nil, restrictions={})
@@ -71,6 +72,7 @@ module Waveapi
       #execute(INSERT_AFTER, what, bundled_annotations)
       modify_action = ModifyAction.new(ModifyAction::INSERT_AFTER, what)
       operation = DocumentModifyOperation.new(@wave_id, @wavelet_id, @blip_id, modify_action)
+      @context.add_operation(operation)
     end
 
     def replace(what, bundled_annotations=nil)
