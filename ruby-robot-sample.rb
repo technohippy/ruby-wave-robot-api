@@ -35,6 +35,36 @@ robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
     :url => 'http://www.google.com/logos/clickortreat1.gif',
     :width => 320, :height => 118))
 =begin
+[
+  {
+    "params": {"capabilitiesHash": "0xd49798", "protocolVersion": "0.21"}, 
+    "method": "robot.notifyCapabilitiesHash", 
+    "id": "0"
+  }, 
+  {
+    "params": {
+      "blipId": "b+Sfs8q74J0", 
+      "waveletId": "wavesandbox.com!conv+root", 
+      "waveId": "wavesandbox.com!w+Sfs8q74Jy", 
+      "modifyAction": {
+        "modifyHow": "INSERT_AFTER", 
+        "elements": [{
+          "type": "IMAGE", 
+          "properties": {
+            "url": "http://www.google.com/logos/clickortreat1.gif", 
+            "width": 320, 
+            "height": 118
+          }
+        }]
+      }
+    }, 
+    "method": "document.modify", 
+    "id": "op1"
+  }
+]
+=end
+
+=begin
   wavelet.proxy_for('douwe').reply().append('hi from douwe')
   inline_blip = blip.insert_inline_blip(5)
   inline_blip.append('hello again!')

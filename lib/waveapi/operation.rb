@@ -167,8 +167,12 @@ module Waveapi
   end
 
   class DocumentModifyOperation < Operation
-    def initialize
+    def initialize(wave_id, wavelet_id, blip_id, modify_action)
       @method = 'document.modify'
+      @wave_id = wave_id
+      @wavelet_id = wavelet_id
+      @blip_id = blip_id
+      @modify_action = modify_action
     end
   end
 
@@ -222,6 +226,39 @@ module Waveapi
 
     def to_json
       @queue.to_json
+    end
+  end
+
+  class ModifyAction
+    DELETE = 'DELETE'
+    REPLACE = 'REPLACE'  
+    INSERT = 'INSERT'
+    INSERT_AFTER = 'INSERT_AFTER'
+    ANNOTATE = 'ANNOTATE'
+    CLEAR_ANNOTATION = 'CLEAR_ANNOTATION'
+    UPDATE_ELEMENT = 'UPDATE_ELEMENT'
+
+    def initialize(modify_how, elements)
+      @modify_how = modify_how
+      elements = [elements] unless elements.is_a?(Array)
+      if elements.first.is_a?(Element)
+        @elements = elements
+      else
+        @values = elements
+      end
+    end
+
+    def to_hash
+      hash = {'modifyHow' => @modify_how}
+      if @elements
+        hash['elements'] = @elements.map{|e| e.to_hash}
+      elsif @values
+        hash['values'] = @values.map{|v| v.to_hash}
+      end
+    end
+
+    def to_json
+      self.to_hash.to_json
     end
   end
 end
