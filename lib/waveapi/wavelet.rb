@@ -33,6 +33,9 @@ module Waveapi
     end
 
     def proxy_for(proxy_for_id)
+      operation = WaveletAddParticipantOperation.new(@wave_id, @wavelet_id, 
+        @context.proxy_for_address(proxy_for_id))
+      @context.add_operation(operation)
       ret = self.class.new(@raw_json, @context)
       ret.proxy_for_id = proxy_for_id
       ret

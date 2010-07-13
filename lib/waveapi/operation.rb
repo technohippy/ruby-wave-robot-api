@@ -91,8 +91,19 @@ module Waveapi
   end
 
   class WaveletAddParticipantOperation < Operation
-    def initialize
+    def initialize(wave_id, wavelet_id, participant_id)
       @method = 'wavelet.participant.add'
+      @wave_id = wave_id
+      @wavelet_id = wavelet_id
+      @participant_id = participant_id
+    end
+
+    def params
+      {
+        'waveletId' => @wavelet_id,
+        'waveId' => @wave_id,
+        'participantId' => @participant_id
+      }
     end
   end
 

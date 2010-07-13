@@ -17,6 +17,9 @@ module Waveapi
       self.class.new(@message_bundle, @operation_bundle.proxy_for(proxy_for_id))
     end
 =end
+    def proxy_for_address(proxy_for_id)
+      @message_bundle.robot_address.sub('@', "+#{proxy_for_id}@")
+    end
 
     def blips
       @message_bundle.blips
