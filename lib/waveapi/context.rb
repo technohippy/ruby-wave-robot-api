@@ -6,8 +6,9 @@ module Waveapi
     attr_accessor :message_bundle, :operation_bundle
 
     def initialize(json_str, capabilities_hash)
-      #@message_bundle = MessageBundle.new(json_str, self)
-      MessageBundle.new(json_str, self)
+      @raw_json = json_str
+      @capabilities_hash = capabilities_hash
+      @message_bundle = MessageBundle.new(json_str, self)
       @operation_bundle = OperationBundle.new(capabilities_hash)
     end
 
@@ -29,6 +30,10 @@ module Waveapi
 
     def add_operation(operation)
       @operation_bundle << operation
+    end
+
+    def copy
+      self.class.new(@raw_json, @capabilities_hash)
     end
   end
 end

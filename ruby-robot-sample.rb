@@ -30,10 +30,9 @@ end
 # http://code.google.com/intl/ja/apis/wave/extensions/robots/python-walkthrough.html
 robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
   blip = event.blip
-  blip.append('hello')
   #wavelet.title = 'A wavelet title'
+  #blip.append('hello')
   #blip.append(Waveapi::Image.new('http://www.google.com/logos/clickortreat1.gif', 320, 118))
-  #wavelet.proxy_for('douwe').reply().append('hi from douwe')
 =begin
   inline_blip = blip.insert_inline_blip(5)
   inline_blip.append('hello again!')
@@ -41,6 +40,55 @@ robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
   new_wave.root_blip.append('A new day and a new wave')
   new_wave.root_blip.append_markup('<p>Some stuff!</p><p>Not the <b>beautiful</b></p>') 
   new_wave.submit_with(wavelet)
+=end
+  wavelet.proxy_for('douwe').reply().append('hi from douwe')
+=begin
+[
+  {
+    "params": {"capabilitiesHash": "0xd49798", "protocolVersion": "0.21"}, 
+    "method": "robot.notifyCapabilitiesHash", 
+    "id": "0"
+  }, 
+  {
+    "params": {
+      "waveletId": "wavesandbox.com!conv+root", 
+      "waveId": "wavesandbox.com!w+fZPSm_lQA", 
+      "participantId": "ruby-teacher.on-wave+douwe@appspot.com"
+    }, 
+    "method": "wavelet.participant.add", 
+    "id": "op1"
+  }, 
+  {
+    "params": {
+      "waveletId": "wavesandbox.com!conv+root", 
+      "waveId": "wavesandbox.com!w+fZPSm_lQA", 
+      "blipData": {
+        "waveletId": "wavesandbox.com!conv+root", 
+        "blipId": "TBD_wavesandbox.com!conv+root_0x4f8595d846f3fa72", 
+        "waveId": "wavesandbox.com!w+fZPSm_lQA", 
+        "content": "\n", 
+        "parentBlipId": null
+      }, 
+      "proxyingFor": "douwe"
+    }, 
+    "method": "wavelet.appendBlip", 
+    "id": "op2"
+  }, 
+  {
+    "params": {
+      "blipId": "TBD_wavesandbox.com!conv+root_0x4f8595d846f3fa72",
+      "waveletId": "wavesandbox.com!conv+root", 
+      "waveId": "wavesandbox.com!w+fZPSm_lQA", 
+      "modifyAction": {
+        "modifyHow": "INSERT_AFTER", 
+        "values": ["hi from douwe"]
+      }, 
+      "proxyingFor": "douwe"
+    }, 
+    "method": "document.modify", 
+    "id": "op3"
+  }
+]
 =end
 end
 

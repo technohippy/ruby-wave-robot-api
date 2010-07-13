@@ -45,12 +45,17 @@ module Waveapi
   end
 
   class WaveletAppendBlipOperation < Operation
-    def initialize(wave_id, message)
+    def initialize(wave_id, context, message=nil)
       @method = 'wavelet.appendBlip'
       @wave_id = wave_id
+      @context = context
       @wavelet_id = 'wavesandbox.com!conv+root'
-      @message = message
+      @message = message || "\n"
       @blip_data = new_blip_data(@wave_id, @wavelet_id, @message, nil)
+    end
+
+    def blip
+      @blip ||= Blip.new(@blip_data, @context)
     end
 
     def params
