@@ -17,13 +17,13 @@ robot = Waveapi::Robot.new(
 
 # http://code.google.com/intl/ja/apis/wave/extensions/robots/python-tutorial.html
 robot.register_handler(Waveapi::WaveletSelfAddedEvent) do |event, wavelet|
-  wavelet.reply("\nHi everybody! I'm a Ruby robot!")
+  #wavelet.reply("\nHi everybody! I'm a Ruby robot!")
 end
 
 robot.register_handler(Waveapi::WaveletParticipantsChangedEvent) do |event, wavelet|
   new_participants = event.participants_added
   new_participants.each do |new_participant|
-    wavelet.reply("\nHi : #{new_participant}")
+    #wavelet.reply("\nHi : #{new_participant}")
   end
 end
 
@@ -87,6 +87,48 @@ robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
     }, 
     "method": "document.modify", 
     "id": "op3"
+  }
+]
+=end
+=begin
+[
+  {
+    "method":"robot.notifyCapabilitiesHash",
+    "id":"0",
+    "params":{
+      "protocolVersion":"0.21",
+      "capabilitiesHash":"811f1864387db4dcfe4afb9365407d7d6f4239fb"
+    }
+  },
+  {
+    "method":"wavelet.appendBlip",
+    "id":"op2",
+    "params":{
+      "waveletId":"wavesandbox.com!conv+root",
+      "waveId":"wavesandbox.com!w+eZg2gbjgA",
+      "blipData":{
+        "waveletId":"wavesandbox.com!conv+root",
+        "blipId":"TBD_wavesandbox.com!conv+root_4b4e5",
+        "waveId":"wavesandbox.com!w+eZg2gbjgA",
+        "parentBlipId":null,
+        "content":"\n"
+      },
+      "proxyingFor":"douwe"
+    }
+  },
+  {
+    "method":"document.modify",
+    "id":"op3",
+    "params":{
+      "waveletId":"wavesandbox.com!conv+root",
+      "blipId":"TBD_wavesandbox.com!conv+root_4b4e5",
+      "waveId":"wavesandbox.com!w+eZg2gbjgA",
+      "modifyAction":{
+        "modifyHow":"INSERT_AFTER",
+        "values":["hi from douwe"]
+      },
+      "proxyingFor":"douwe"
+    }
   }
 ]
 =end
