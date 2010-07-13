@@ -8,7 +8,6 @@ module Waveapi
     def initialize(json_str, capabilities_hash)
       @raw_json = json_str
       @capabilities_hash = capabilities_hash
-      #@message_bundle = MessageBundle.new(json_str, self)
       MessageBundle.new(json_str, self)
       @operation_bundle = OperationBundle.new(capabilities_hash)
     end

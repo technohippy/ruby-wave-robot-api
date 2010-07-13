@@ -33,7 +33,7 @@ module Waveapi
     end
 
     def proxy_for(proxy_for_id)
-      ret = self.class.new(@raw_json, @context.copy)
+      ret = self.class.new(@raw_json, @context)
       ret.proxy_for_id = proxy_for_id
       ret
     end
