@@ -244,7 +244,7 @@ module Waveapi
     end
 
     def <<(operation)
-      operation.id = "op#{@queue.size + 1}"
+      operation.id = "op#{@queue.size}"
       @queue << operation
     end
 
