@@ -8,13 +8,16 @@ module Waveapi
     def initialize(json_str, capabilities_hash)
       @raw_json = json_str
       @capabilities_hash = capabilities_hash
-      @message_bundle = MessageBundle.new(json_str, self)
+      #@message_bundle = MessageBundle.new(json_str, self)
+      MessageBundle.new(json_str, self)
       @operation_bundle = OperationBundle.new(capabilities_hash)
     end
 
+=begin
     def proxy_for(proxy_for_id)
       self.class.new(@message_bundle, @operation_bundle.proxy_for(proxy_for_id))
     end
+=end
 
     def blips
       @message_bundle.blips
