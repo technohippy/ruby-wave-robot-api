@@ -1,9 +1,3 @@
-=begin
-Robot ID: ruby-wave-robot-api@googlewaverobots.com
-Robot Base URL: http://ruby-wave-robot-api.heroku.com/sample-robot
-Consumer Key: 175416260065
-Consumer Secret: q1ugdhhkNZHGKyJHG212apzS
-=end
 require 'rubygems'
 require 'sinatra'
 require 'waveapi'
