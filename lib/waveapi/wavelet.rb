@@ -27,7 +27,7 @@ module Waveapi
     end
 
     def reply(message=nil)
-      operation = WaveletAppendBlipOperation.new(@wave_id, @context, message)
+      operation = WaveletAppendBlipOperation.new(@wave_id, @context, message, @proxy_for_id)
       @context.add_operation(operation)
       operation.blip
     end

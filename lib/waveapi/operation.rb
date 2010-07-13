@@ -21,7 +21,7 @@ module Waveapi
     attr_accessor :id
 
     def new_blip_data(wave_id, wavelet_id, initial_content, parent_blip_id)
-      temp_blip_id = "TBD_#{wavelet_id}_#{rand(100000).to_s(16)}"
+      temp_blip_id = "TBD_#{wavelet_id}_#{rand(1000000).to_s(16)}"
       {
         'waveId' => wave_id,
         'waveletId' => wavelet_id,
@@ -45,25 +45,32 @@ module Waveapi
   end
 
   class WaveletAppendBlipOperation < Operation
-    def initialize(wave_id, context, message=nil)
+    def initialize(wave_id, context, message=nil, proxy_for_id=nil)
       @method = 'wavelet.appendBlip'
       @wave_id = wave_id
       @context = context
       @wavelet_id = 'wavesandbox.com!conv+root'
       @message = message || "\n"
+      @proxy_for_id = proxy_for_id
       @blip_data = new_blip_data(@wave_id, @wavelet_id, @message, nil)
     end
 
     def blip
-      @blip ||= Blip.new(@blip_data, @context)
+      unless @blip
+        @blip = Blip.new(@blip_data, @context)
+        @blip.proxy_for_id = @proxy_for_id
+      end
+      @blip
     end
 
     def params
-      {
+      ret = {
         "waveletId" => @wavelet_id,
         "waveId" => @wave_id,
         "blipData" => @blip_data
       }
+      ret['proxyingFor'] = @proxy_for_id if @proxy_for_id
+      ret
     end
   end
 
@@ -172,21 +179,24 @@ module Waveapi
   end
 
   class DocumentModifyOperation < Operation
-    def initialize(wave_id, wavelet_id, blip_id, modify_action)
+    def initialize(wave_id, wavelet_id, blip_id, modify_action, proxy_for_id=nil)
       @method = 'document.modify'
       @wave_id = wave_id
       @wavelet_id = wavelet_id
       @blip_id = blip_id
       @modify_action = modify_action
+      @proxy_for_id = proxy_for_id
     end
 
     def params
-      {
+      ret = {
         'waveId' => @wave_id,
         'waveletId' => @wavelet_id,
         'blipId' => @blip_id,
         'modifyAction' => @modify_action.to_hashmap
       }
+      ret['proxyingFor'] = @proxy_for_id if @proxy_for_id
+      ret
     end
   end
 

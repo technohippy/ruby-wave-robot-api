@@ -116,7 +116,7 @@ module Waveapi
   end
 
   class Blip
-    attr_reader :blip_id, :wave_id, :wavelet_id, :child_blip_ids, :contributors, :creator, :last_modified_time, :version, :parent_blip_id, :annotations, :context
+    attr_reader :blip_id, :wave_id, :wavelet_id, :child_blip_ids, :contributors, :creator, :last_modified_time, :version, :parent_blip_id, :annotations, :context, :proxy_for_id
 
     def initialize(json, context)
       @context = context
@@ -220,6 +220,7 @@ module Waveapi
       }
     end
 
+=begin
     def proxy_for(proxy_for_id)
       context = @context.proxy_for(proxy_for_id)
       res = self.new({}, nil)
@@ -239,6 +240,7 @@ module Waveapi
       res.raw_json = @raw_json
       res
     end
+=end
 
     def text
       @content
