@@ -11,7 +11,7 @@ Note
 
 This library is under construction. The sample in this file is the only code I've confirmed to work.
 
-How to try the sample on Heroku
+How to try the sample on [Heroku](http://code.google.com/intl/ja/apis/wave/extensions/robots/registration.html)
 -------------------------------
 
 1. Register your robot's domain in accordance with:
