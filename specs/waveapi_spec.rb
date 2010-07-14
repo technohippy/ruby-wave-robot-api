@@ -18,6 +18,25 @@ require 'waveapi'
 =end
 
 describe Waveapi do
+  it 'participants changed' do 
+    robot = Waveapi::Robot.new('Test Robot')
+    robot.register_handler(Waveapi::WaveletParticipantsChangedEvent) do |event, wavelet|
+      new_participants = event.participants_added
+      new_participants.each do |new_participant|
+        wavelet.reply("\nHi : #{new_participant}")
+      end
+    end
+
+    incoming_json = '{"events":[{"type":"WAVELET_SELF_ADDED","modifiedBy":"andyjpn@googlewave.com","timestamp":1279125906505,"properties":{"blipId":"b+Mg1By4lSJ"}},{"type":"WAVELET_PARTICIPANTS_CHANGED","modifiedBy":"andyjpn@googlewave.com","timestamp":1279125906505,"properties":{"blipId":"b+Mg1By4lSJ","participantsAdded":["ruby-teacher.on-wave@appspot.com"],"participantsRemoved":[]}}],"wavelet":{"creationTime":1279125768512,"lastModifiedTime":1279125906505,"version":8,"participants":["andyjpn@googlewave.com","ruby-teacher.on-wave@appspot.com"],"participantRoles":{"ruby-teacher.on-wave@appspot.com":"FULL","andyjpn@googlewave.com":"FULL"},"dataDocuments":{},"tags":[],"creator":"andyjpn@googlewave.com","rootBlipId":"b+Mg1By4lSJ","title":"","waveId":"googlewave.com!w+Mg1By4lSI","waveletId":"googlewave.com!conv+root","rootThread":null},"blips":{"b+Mg1By4lSJ":{"annotations":[{"name":"user/d/Mg1By4lS","value":"andyjpn@googlewave.com,1279125768217,","range":{"start":0,"end":1}},{"name":"conv/title","value":"","range":{"start":0,"end":1}},{"name":"user/e/Mg1By4lS","value":"andyjpn@googlewave.com","range":{"start":1,"end":1}}],"elements":{"0":{"type":"LINE","properties":{}}},"blipId":"b+Mg1By4lSJ","childBlipIds":[],"contributors":["andyjpn@googlewave.com"],"creator":"andyjpn@googlewave.com","content":"\n","lastModifiedTime":1279125768511,"parentBlipId":null,"version":5,"waveId":"googlewave.com!w+Mg1By4lSI","waveletId":"googlewave.com!conv+root","replyThreadIds":[],"threadId":null}},"threads":{},"robotAddress":"ruby-teacher.on-wave@appspot.com"}'
+
+    outgoing_json = JSON.parse('[{"params": {"capabilitiesHash": "0xd0d9c75", "protocolVersion": "0.21"}, "method": "robot.notifyCapabilitiesHash", "id": "0"}, {"params": {"waveletId": "googlewave.com!conv+root", "waveId": "googlewave.com!w+Mg1By4lSI", "blipData": {"waveletId": "googlewave.com!conv+root", "blipId": "TBD_googlewave.com!conv+root_0x7d184e3c6084a641", "waveId": "googlewave.com!w+Mg1By4lSI", "content": "\nHi : ruby-teacher.on-wave@appspot.com", "parentBlipId": null}}, "method": "wavelet.appendBlip", "id": "op1"}]')
+
+    result_json = JSON.parse(robot.handle(incoming_json))
+    result_json.first['params']['capabilitiesHash'] = '0xd0d9c75'
+    result_json[1]['params']['blipData']['blipId'] = 'TBD_googlewave.com!conv+root_0x7d184e3c6084a641'
+    result_json.should eql(outgoing_json)
+  end
+
   it 'inline_blip.append' do 
     robot = Waveapi::Robot.new('Test Robot')
     robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
