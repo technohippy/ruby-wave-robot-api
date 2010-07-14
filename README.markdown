@@ -15,7 +15,7 @@ How to try the sample on Heroku
 -------------------------------
 
 1. Register your robot's domain in accordance with:
-   http://code.google.com/intl/ja/apis/wave/extensions/robots/registration.html
+   [http://code.google.com/intl/ja/apis/wave/extensions/robots/registration.html](http://code.google.com/intl/ja/apis/wave/extensions/robots/registration.html)
 
 2. Push all files to your heroku repository
 
@@ -61,7 +61,6 @@ Contact
 -------
 Ando Yasushi (andyjpn _at_ gmail.com)
 
-* http://reviewmycode.blogspot.com/
-* http://d.hatena.ne.jp/technohippy/
-* http://twitter.com/technohippy
-
+* [http://reviewmycode.blogspot.com/](http://reviewmycode.blogspot.com/)
+* [http://d.hatena.ne.jp/technohippy/](http://d.hatena.ne.jp/technohippy/)
+* [http://twitter.com/technohippy](http://twitter.com/technohippy)
