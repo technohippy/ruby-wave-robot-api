@@ -1,10 +1,28 @@
-NOTE
-====
+Ruby Wave Robot API
+===================
 
-This library is under construction. The following sample is the only code I've confirmed to work.
+What is this
+------------
+
+This library allows you to develop a wave robot with Ruby language and to run it on any server other than GAE.
+
+Note
+----
+
+This library is under construction. The sample in this file is the only code I've confirmed to work.
+
+How to try the sample on Heroku
+-------------------------------
+
+1. Register your robot's domain in accordance with:
+   http://code.google.com/intl/ja/apis/wave/extensions/robots/registration.html
+
+2. Push all files to your heroku repository
+
+3. Add your robot to a wave
 
 Sample
-======
+------
 
     require 'rubygems'
     require 'sinatra'
@@ -13,7 +31,7 @@ Sample
     robot = Waveapi::Robot.new(
       'Ruby Robot', 
       :base_url => '/sample-robot', 
-      :image_url => 'http://ruby-wave-robot.heroku.com/images/icon.png',
+      :image_url => 'http://ruby-wave-robot-api.heroku.com/images/icon.png',
       :profile_url => 'http://ruby-wave-robot-api.heroku.com'
     )
 
@@ -38,3 +56,12 @@ Sample
     end
 
     robot.start
+
+Contact
+-------
+Ando Yasushi (andyjpn _at_ gmail.com)
+
+* http://reviewmycode.blogspot.com/
+* http://d.hatena.ne.jp/technohippy/
+* http://twitter.com/technohippy
+
