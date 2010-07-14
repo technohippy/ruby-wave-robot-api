@@ -19,7 +19,7 @@ How to try the sample on [Heroku](http://code.google.com/intl/ja/apis/wave/exten
 
 2. Push all files to your heroku repository
 
-3. Add your robot to a wave
+3. Add your robot to a wave as a participant
 
 Sample
 ------
