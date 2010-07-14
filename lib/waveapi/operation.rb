@@ -49,7 +49,7 @@ module Waveapi
       @method = 'wavelet.appendBlip'
       @wave_id = wave_id
       @context = context
-      @wavelet_id = 'wavesandbox.com!conv+root'
+      @wavelet_id = "#{@context.domain}!conv+root"
       @message = message || "\n"
       @proxy_for_id = proxy_for_id
       @blip_data = new_blip_data(@wave_id, @wavelet_id, @message, nil)
@@ -65,9 +65,9 @@ module Waveapi
 
     def params
       ret = {
-        "waveletId" => @wavelet_id,
-        "waveId" => @wave_id,
-        "blipData" => @blip_data
+        'waveletId' => @wavelet_id,
+        'waveId' => @wave_id,
+        'blipData' => @blip_data
       }
       ret['proxyingFor'] = @proxy_for_id if @proxy_for_id
       ret

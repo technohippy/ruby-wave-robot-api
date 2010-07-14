@@ -2,6 +2,7 @@ require 'waveapi/operation'
 
 module Waveapi
   class Wavelet
+    attr_reader :wave_id, :wavelet_id, :creator, :creation_time
     attr_accessor :blips, :proxy_for_id
 
     def initialize(json, context)
@@ -34,7 +35,7 @@ module Waveapi
 
     def proxy_for(proxy_for_id)
       operation = WaveletAddParticipantOperation.new(@wave_id, @wavelet_id, 
-        @context.proxy_for_address(proxy_for_id))
+        @context.address_for_proxy(proxy_for_id))
       @context.add_operation(operation)
       ret = self.class.new(@raw_json, @context)
       ret.proxy_for_id = proxy_for_id

@@ -19,7 +19,7 @@ module Waveapi
     end
 
     def handle(json_str)
-      puts "---- INPUT\n#{json_str}"
+      #puts "INCOMING:\n#{json_str}"
       @context = Context.new(json_str, capabilities_hash)
 
       wavelet = @context.message_bundle.wavelet
@@ -30,7 +30,7 @@ module Waveapi
         end
       end
 
-      puts "---- OUTPUT\n#{@context.operation_bundle.to_json}"
+      #puts "OUTGOING:\n#{@context.operation_bundle.to_json}"
       @context.operation_bundle.to_json
     end
 
