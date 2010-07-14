@@ -20,6 +20,10 @@ module Waveapi
   class Operation
     attr_accessor :id
 
+    def domain
+      @wave_id.split('!').first
+    end
+
     def new_blip_data(wave_id, wavelet_id, initial_content, parent_blip_id)
       temp_blip_id = "TBD_#{wavelet_id}_#{rand(1000000).to_s(16)}"
       {
@@ -83,9 +87,9 @@ module Waveapi
 
     def params
       {
-        "waveletId" => "wavesandbox.com!conv+root",
-        "waveId" => @wave_id,
-        "waveletTitle" => @title
+        'waveletId' => "#{domain}!conv+root",
+        'waveId' => @wave_id,
+        'waveletTitle' => @title
       }
     end
   end
