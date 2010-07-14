@@ -34,7 +34,7 @@ module Waveapi
     end
 
     def add_blip(blip)
-      @message_bundle.blips << blip #error
+      @message_bundle.blips[blip.blip_id] = blip
     end
 
     def add_operation(operation)

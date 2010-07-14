@@ -178,7 +178,10 @@ module Waveapi
 
     def initialize(wave_id, wavelet_id, parent_blip_id, position)
       @method = 'document.inlineBlip.insert'
-      @inline_blip_data = new_blip_data(wave_id, wavelet_id, '', blip_id)
+      @wave_id = wave_id
+      @wavelet_id = wavelet_id
+      @blip_id = parent_blip_id
+      @inline_blip_data = new_blip_data(wave_id, wavelet_id, '', parent_blip_id)
       @position = position
     end
 
@@ -187,7 +190,7 @@ module Waveapi
         'waveId' => @wave_id,
         'waveletId' => @wavelet_id,
         'blipId' => @blip_id,
-        'index' => @positioin,
+        'index' => @position,
         'blipData' => @inline_blip_data
       }
     end

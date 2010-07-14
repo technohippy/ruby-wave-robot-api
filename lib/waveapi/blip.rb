@@ -276,6 +276,7 @@ module Waveapi
       raise ArgumentError.new("Illegal inline blip position: #{position}. " +
         "Position has to be greater than 0.") if position <= 0
       operation = DocumentInlineBlipInsertOperation.new(@wave_id, @wavelet_id, @blip_id, position)
+      @context.add_operation(operation)
       new_blip = Blip.new(operation.inline_blip_data, @context)
       @context.add_blip(new_blip)
       new_blip
