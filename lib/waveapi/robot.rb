@@ -16,6 +16,11 @@ module Waveapi
       @image_url = opts[:image_url] || 'http://example.com/image.png'
       @profile_url = opts[:profile_url] || 'http://example.com/profile.png'
       @event_table = {}
+      @wave_service = WaveService.new
+    end
+
+    def new_wave(domain, participants=[], message='', proxy_for_id=nil, submit=false)
+      @wave_service.new_wave(domain, participants, message, proxy_for_id, submit)
     end
 
     def handle(json_str)
@@ -40,10 +45,10 @@ module Waveapi
     end
 
     def profile_json
-      json = {:name => @name}
-      json[:imageUrl] = @image_url if @image_url
-      json[:profileUrl] = @profile_url if @profile_url
-      json.to_json
+      hash = {:name => @name}
+      hash[:imageUrl] = @image_url if @image_url
+      hash[:profileUrl] = @profile_url if @profile_url
+      hash.to_json
     end
 
     def capabilities_hash

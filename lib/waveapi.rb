@@ -1,4 +1,6 @@
 require 'waveapi/util'
+require 'waveapi/participants'
+require 'waveapi/wave_service'
 require 'waveapi/robot'
 require 'waveapi/operation'
 require 'waveapi/event'

@@ -2,7 +2,7 @@ require 'waveapi/operation'
 
 module Waveapi
   class Wavelet
-    attr_reader :wave_id, :wavelet_id, :creator, :creation_time
+    attr_reader :wave_id, :wavelet_id, :creator, :creation_time, :participants
     attr_accessor :blips, :proxy_for_id
 
     def initialize(json, context)
@@ -15,12 +15,17 @@ module Waveapi
       @creation_time = json['creationTime'] || 0
       #@data_documents = 
       @last_modified_time = json['lastModifiedTime']
-      #@participants = 
+      @participants = Participants.new(json['participants'], json['participantRoles'],
+        @wave_id, @wavelet_id, @context)
       @title = json['title'] || ''
       #@tags = 
       @root_blip_id = json['rootBlipId']
       #@root_blip = 
       @proxy_for_id = nil
+    end
+
+    def domain
+      @wave_id.split('!').first
     end
 
     def title=(title)

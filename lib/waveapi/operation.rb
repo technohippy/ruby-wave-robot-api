@@ -124,8 +124,21 @@ module Waveapi
   end
 
   class WaveletModifyParticipantRoleOperation < Operation
-    def initialize
+    def initialize(wave_id, wavelet_id, participant_id, role)
       @method = 'wavelet.modifyParticipantRole'
+      @wave_id = wave_id
+      @wavelet_id = wavelet_id
+      @participant_id = participant_id
+      @role = role
+    end
+
+    def params
+      {
+        'waveletId' => @wavelet_id,
+        'waveId' => @wave_id,
+        'participantId' => @participant_id,
+        'role' => @role
+      }
     end
   end
 
@@ -248,8 +261,10 @@ module Waveapi
   class OperationBundle
     attr_accessor :queue, :capabilities_hash, :proxy_for_id
 
-    def initialize(capabilities_hash)
-      @queue = [RobotNotifyCapabilitiesHashOperation.new(capabilities_hash)]
+    def initialize(capabilities_hash=nil)
+      @queue = capabilities_hash \
+        ? [RobotNotifyCapabilitiesHashOperation.new(capabilities_hash)] \
+        : []
       @capabilities_hash = capabilities_hash
     end
 
