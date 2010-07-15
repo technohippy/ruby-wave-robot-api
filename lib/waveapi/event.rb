@@ -35,8 +35,12 @@ module Waveapi
       "WAVELET_BLIP_CREATED"
     end
 
+    attr_reader :new_blip_id, :new_blip
+
     def initialize(json, blips=[])
       super
+      @new_blip_id = @properties['newBlipId']
+      @new_blip = @context.find_blip_by_id(@new_blip_id)
     end
   end
 
@@ -45,8 +49,12 @@ module Waveapi
       "WAVELET_BLIP_REMOVED"
     end
 
+    attr_reader :removed_blip_id, :removed_blip
+
     def initialize(json, blips=[])
       super
+      @removed_blip_id = @properties['removedBlipId']
+      @removed_blip = @context.find_blip_by_id(@removed_blip_id)
     end
   end
 
@@ -99,18 +107,25 @@ module Waveapi
       "WAVELET_TITLE_CHANGED"
     end
 
+    attr_reader :title
+
     def initialize(json, blips=[])
       super
+      @title = @properties['title']
     end
   end
 
-  class BlipContributorChangedEvent < Event
+  class BlipContributorsChangedEvent < Event
     def self.type
-      "BLIP_CONTRIBUTOR_CHANGED"
+      "BLIP_CONTRIBUTORS_CHANGED"
     end
+
+    attr_reader :contributors_added, :contributors_removed
 
     def initialize(json, blips=[])
       super
+      @contributors_added = @properties['contributorsAdded'] || []
+      @contributors_removed = @properties['contributorsremoved'] || []
     end
   end
 
@@ -139,8 +154,11 @@ module Waveapi
       "FORM_BUTTON_CLICKED"
     end
 
+    attr_reader :button_name
+
     def initialize(json, blips=[])
       super
+      @button_name = @properties['buttonName']
     end
   end
 
@@ -149,14 +167,72 @@ module Waveapi
       "GADGET_STATE_CHANGED"
     end
 
+    attr_reader :index, :old_state
+
     def initialize(json, blips=[])
       super
+      @index = @properties['index']
+      @old_state = @properties['oldState']
     end
   end
 
   class AnnotatedTextChangedEvent < Event
     def self.type
       "ANNOTATED_TEXT_CHANGED"
+    end
+
+    attr_reader :name, :value
+
+    def initialize(json, blips=[])
+      super
+      @name = @properties['name']
+      @value = @properties['value']
+    end
+  end
+
+  class OperationErrorEvent < Event
+    def self.type
+      "OPERATION_ERROR"
+    end
+
+    attr_reader :operation_id, :error_message
+
+    def initialize(json, blips=[])
+      super
+      @operation_id = @properties['operationId']
+      @error_message = @properties['message']
+    end
+  end
+
+  class WaveletCreatedEvent < Event
+    def self.type
+      "WAVELET_CREATED"
+    end
+
+    attr_reader :message
+
+    def initialize(json, blips=[])
+      super
+      @message = @properties['message']
+    end
+  end
+
+  class WaveletFetchedEvent < Event
+    def self.type
+      "WAVELET_FETCHED"
+    end
+
+    attr_reader :message
+
+    def initialize(json, blips=[])
+      super
+      @message = @properties['message']
+    end
+  end
+
+  class WaveletTagsChangedEvent < Event
+    def self.type
+      "WAVELET_TAGS_CHANGED"
     end
 
     def initialize(json, blips=[])
