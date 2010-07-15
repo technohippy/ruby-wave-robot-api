@@ -19,7 +19,7 @@ module Waveapi
     end
 
     def handle(json_str)
-      #puts "INCOMING:\n#{json_str}"
+      puts "INCOMING:\n#{json_str}" if $DEBUG
       @context = Context.new(json_str, capabilities_hash)
 
       wavelet = @context.message_bundle.wavelet
@@ -30,7 +30,7 @@ module Waveapi
         end
       end
 
-      #puts "OUTGOING:\n#{@context.operation_bundle.to_json}"
+      puts "OUTGOING:\n#{@context.operation_bundle.to_json}" if $DEBUG
       @context.operation_bundle.to_json
     end
 
@@ -40,7 +40,10 @@ module Waveapi
     end
 
     def profile_json
-      {:name => @name, :imageUrl => @image_url, :profileUrl => @profile_url}.to_json
+      json = {:name => @name}
+      json[:imageUrl] = @image_url if @image_url
+      json[:profileUrl] = @profile_url if @profile_url
+      json.to_json
     end
 
     def capabilities_hash
