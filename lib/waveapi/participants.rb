@@ -3,6 +3,8 @@ module Waveapi
     ROLE_FULL = 'FULL'
     ROLE_READ_ONLY = 'READ_ONLY'
 
+    attr_reader :participants, :roles
+
     def initialize(participants, roles, wave_id, wavelet_id, context)
       @participants = participants
       @roles = roles.dup

@@ -10,9 +10,11 @@ module Waveapi
       @context = context
       @context.message_bundle = self
       @raw_data = json_str
-      @raw_json = JSON.parse(json_str).dup
-      @robot_address = @raw_json['robotAddress']
-      @wavelet = Wavelet.new(@raw_json['wavelet'], @context)
+      unless json_str.empty?
+        @raw_json = JSON.parse(json_str)
+        @robot_address = @raw_json['robotAddress']
+        @wavelet = Wavelet.new(@raw_json['wavelet'], @context)
+      end
     end
 
     def blips

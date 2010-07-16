@@ -13,7 +13,7 @@ module Waveapi
       @wavelet_id = json['waveletId']
       @creator = json['creator']
       @creation_time = json['creationTime'] || 0
-      #@data_documents = 
+      @data_documents = {} # TODO
       @last_modified_time = json['lastModifiedTime']
       @participants = Participants.new(json['participants'], json['participantRoles'],
         @wave_id, @wavelet_id, @context)
@@ -45,6 +45,25 @@ module Waveapi
       ret = self.class.new(@raw_json, @context)
       ret.proxy_for_id = proxy_for_id
       ret
+    end
+
+    def to_hashmap
+      {
+        "rootBlipId" => @root_blip_id,
+        "creator" => @creator,
+        "blips" => Hash[*@blips.to_a.map{|k, v| [k, v.to_hashmap]}.flatten],
+        "title" => @title,
+        "creationTime" => @creation_time,
+        "dataDocuments" => @data_document,
+        "waveletId" => @wavelet_id,
+        "participants" => @participants.participants,
+        "waveId" => @wave_id,
+        "lastModifiedTime" => @last_modified_time
+      }
+    end
+
+    def to_json
+      to_hashmap.to_json
     end
   end
 end

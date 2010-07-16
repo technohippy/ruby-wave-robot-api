@@ -24,17 +24,6 @@ module Waveapi
       @wave_id.split('!').first
     end
 
-    def new_blip_data(wave_id, wavelet_id, initial_content, parent_blip_id)
-      temp_blip_id = "TBD_#{wavelet_id}_#{rand(1000000).to_s(16)}"
-      {
-        'waveId' => wave_id,
-        'waveletId' => wavelet_id,
-        'blipId' => temp_blip_id,
-        'content' => initial_content,
-        'parentBlipId' => parent_blip_id
-      }
-    end
-
     def to_hashmap
       {
         "id" => @id,
@@ -56,7 +45,7 @@ module Waveapi
       @wavelet_id = "#{@context.domain}!conv+root"
       @message = message || "\n"
       @proxy_for_id = proxy_for_id
-      @blip_data = new_blip_data(@wave_id, @wavelet_id, @message, nil)
+      @blip_data = WaveService.new_blip_data(@wave_id, @wavelet_id, @message, nil)
     end
 
     def blip
@@ -149,7 +138,7 @@ module Waveapi
       @method = 'blip.createChild'
       @wave_id = wave_id
       @wavelet_id = wavelet_id
-      @blip_data = new_blip_data(wave_id, wavelet_id, '', parent_blip_id)
+      @blip_data = WaveService.new_blip_data(wave_id, wavelet_id, '', parent_blip_id)
     end
 
     def params
@@ -194,7 +183,7 @@ module Waveapi
       @wave_id = wave_id
       @wavelet_id = wavelet_id
       @blip_id = parent_blip_id
-      @inline_blip_data = new_blip_data(wave_id, wavelet_id, '', parent_blip_id)
+      @inline_blip_data = WaveService.new_blip_data(wave_id, wavelet_id, '', parent_blip_id)
       @position = position
     end
 
@@ -232,8 +221,24 @@ module Waveapi
   end
 
   class RobotCreateWaveletOperation < Operation
-    def initialize
+    attr_reader :wavelet_data
+
+    def initialize(wave_id, wavelet_id, wavelet_data, message=nil)
       @method = 'robot.createWavelet'
+      @wave_id = wave_id
+      @wavelet_id = wavelet_id
+      @wavelet_data = wavelet_data
+      @message = message
+    end
+
+    def params
+      ret = {
+        'waveId' => @wave_id,
+        'waveletId' => @wavelet_id,
+        'waveletData' => @wavelet_data
+      }
+      ret['message'] = @message if @message
+      ret
     end
   end
 

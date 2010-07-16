@@ -22,7 +22,7 @@ module Waveapi
     end
 
     def domain
-      @domain ||= @message_bundle.wavelet.wave_id.split('!').first
+      @domain ||= @message_bundle.wavelet.domain
     end
 
     def blips

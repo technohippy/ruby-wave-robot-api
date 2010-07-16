@@ -135,7 +135,10 @@ module Waveapi
       @wave_id = json['waveId']
       @wavelet_id = json['waveletId']
       @other_blips = @context.blips # ??
-      #@annotations = 
+      @annotations = []
+      (@raw_json['annotations'] || []).each do |a|
+        @annotations << Annotation.new(a['name'], a['value'], a['range']['start'], a['range']['end'])
+      end
       @elements = []
       (@raw_json['elements'] || {}).each do |k, v|
         @elements[k.to_i] = Element.from_json(v)
@@ -280,6 +283,33 @@ module Waveapi
       new_blip = Blip.new(operation.inline_blip_data, @context)
       @context.add_blip(new_blip)
       new_blip
+    end
+
+    def to_hashmap
+      {
+        "blipId" => @blip_id,
+        "waveletId" => @wavelet_id,
+        "elements" => Hash[*@elements.inject([]){|s, v| s << [s.size, v.to_hashmap]}.flatten],
+        "contributors" => @contributors,
+        "creator" => @creator,
+        "parentBlipId" => @parent_blip_id,
+        "annotations" => [
+          {
+            "range" => {"start" => 0, "end" => 1}, 
+            "name" => "conv/title", 
+            "value" => ""
+          }
+        ], 
+        "content" => @content,
+        "version" => @version, 
+        "lastModifiedTime" => @last_modified_time,
+        "childBlipIds" => [], 
+        "waveId" => @wave_id
+      }
+    end
+
+    def to_json
+      to_hashmap.to_json
     end
   end
 end
