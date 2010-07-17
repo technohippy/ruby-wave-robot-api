@@ -34,7 +34,7 @@ module Waveapi
 
       case message
       when String; # do nothing
-      when Hash;   message = JSON.generate(message).to_s
+      when Hash;   message = message.to_json #JSON.generate(message).to_s
       when JSON;   message = message.to_s
       else;        raise ArgumentError.new('Invalid message type')
       end
