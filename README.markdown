@@ -16,12 +16,13 @@ This library is under construction. The sample in this file is the only code I'v
   * WaveletParticipantsChanged
   * BlipSubmitted
 * Action
-  * wavelet.reply
   * blip.append
   * blip.insert_inline_blip
-  * robot.new_wave
+  * wavelet.reply
+  * wavelet.proxy_for
   * wavelet.append_markup
   * wavelet.submit_with
+  * robot.new_wave
 
 How to try the sample on [Heroku](http://code.google.com/intl/ja/apis/wave/extensions/robots/registration.html)
 -------------------------------
