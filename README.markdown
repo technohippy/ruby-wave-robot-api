@@ -71,7 +71,7 @@ Sample
       inline_blip = blip.insert_inline_blip(5)
       inline_blip.append('hello again!')
 
-      new_wave = robot.new_wave(wavelet.domain, wavelet.participants, :message => wavelet.to_s)
+      new_wave = robot.new_wave(wavelet.domain, wavelet.participants, wavelet.to_json)
       new_wave.root_blip.append('A new day and a new wave')
       new_wave.root_blip.append_markup('<p>Some stuff!</p><p>Not the <b>beautiful</b></p>') 
       new_wave.submit_with(wavelet)
