@@ -1,4 +1,4 @@
 $: << 'lib'
 $DEUBG = true
-require 'ruby-robot-sample'
+require 'examples/test-ruby-robot'
 run Sinatra::Application
