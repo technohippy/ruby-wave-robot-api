@@ -20,7 +20,7 @@ module Waveapi
     def blips
       unless @blips
         @blips = {}
-        @raw_json['blips'].each{|bid, json| @blips[bid] = Blip.new(json, @context)}
+        @raw_json['blips'].each{|bid, json| @blips[bid] = Blip.new(json, @context)} if @raw_json
       end
       @blips
     end

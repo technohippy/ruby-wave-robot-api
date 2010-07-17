@@ -24,7 +24,7 @@ module Waveapi
         'waveId' => wave_id,
         'waveletId' => wavelet_id,
         'rootBlipId' => root_blip_data['blipId'],
-        'participants' => participants
+        'participants' => participants.participants
       }
       [root_blip_data, wavelet_data]
     end
@@ -42,10 +42,9 @@ module Waveapi
       operation = RobotCreateWaveletOperation.new(wavelet_data['waveId'], 
         wavelet_data['waveletId'], wavelet_data, message)
       @context.add_operation(operation)
-      blips = {}
-      root_blip = Blip.new(blip_data, blips, @context)
-      blips[root_blip.blip_id] = root_blip
-      created_wavelet = Wavelet.new(wavelet_data, blips, @context)
+      root_blip = Blip.new(blip_data, @context)
+      @context.add_blip(root_blip)
+      created_wavelet = Wavelet.new(wavelet_data, @context)
       if submit
         # TODO
       end

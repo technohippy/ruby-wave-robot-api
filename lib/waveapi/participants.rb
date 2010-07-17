@@ -6,8 +6,8 @@ module Waveapi
     attr_reader :participants, :roles
 
     def initialize(participants, roles, wave_id, wavelet_id, context)
-      @participants = participants
-      @roles = roles.dup
+      @participants = participants.reverse
+      @roles = roles.nil? ? {} : roles.dup
       @wave_id = wave_id
       @wavelet_id = wavelet_id
       @context = context

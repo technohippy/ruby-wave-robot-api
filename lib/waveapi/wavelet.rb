@@ -2,7 +2,7 @@ require 'waveapi/operation'
 
 module Waveapi
   class Wavelet
-    attr_reader :wave_id, :wavelet_id, :creator, :creation_time, :participants
+    attr_reader :wave_id, :wavelet_id, :creator, :creation_time, :participants, :root_blip, :context
     attr_accessor :blips, :proxy_for_id
 
     def initialize(json, context)
@@ -20,7 +20,7 @@ module Waveapi
       @title = json['title'] || ''
       #@tags = 
       @root_blip_id = json['rootBlipId']
-      #@root_blip = 
+      @root_blip = @context.find_blip_by_id(@root_blip_id)
       @proxy_for_id = nil
     end
 
@@ -45,6 +45,13 @@ module Waveapi
       ret = self.class.new(@raw_json, @context)
       ret.proxy_for_id = proxy_for_id
       ret
+    end
+
+    def submit_with(other_wavelet)
+      @context.operation_bundle.each do |operation|
+        other_wavelet.context.add_operation(operation)
+      end
+      @context = other_wavelet.context
     end
 
     def to_hashmap

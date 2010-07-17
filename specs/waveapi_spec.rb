@@ -26,7 +26,7 @@ describe Waveapi do
   it 'new_wave' do 
     robot = Waveapi::Robot.new('Test Robot')
     robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
-      new_wave = robot.new_wave(wavelet.domain, wavelet.participants, :message => wavelet.to_json)
+      new_wave = robot.new_wave(wavelet.domain, wavelet.participants, wavelet.to_json)
       new_wave.root_blip.append('A new day and a new wave')
       new_wave.root_blip.append_markup('<p>Some stuff!</p><p>Not the <b>beautiful</b></p>') 
       new_wave.submit_with(wavelet)
@@ -34,7 +34,11 @@ describe Waveapi do
 
     incoming_json = '{"events":[{"type":"BLIP_SUBMITTED","modifiedBy":"andyjpn@googlewave.com","timestamp":1279206259104,"properties":{"blipId":"b+22A6jx4SB"}}],"wavelet":{"creationTime":1279206076685,"lastModifiedTime":1279206259104,"version":14,"participants":["andyjpn@googlewave.com","ruby-teacher.on-wave@appspot.com"],"participantRoles":{"ruby-teacher.on-wave@appspot.com":"FULL","andyjpn@googlewave.com":"FULL"},"dataDocuments":{},"tags":[],"creator":"andyjpn@googlewave.com","rootBlipId":"b+22A6jx4SB","title":"","waveId":"googlewave.com!w+22A6jx4SA","waveletId":"googlewave.com!conv+root","rootThread":null},"blips":{"b+22A6jx4SB":{"annotations":[{"name":"conv/title","value":"","range":{"start":0,"end":1}}],"elements":{"0":{"type":"LINE","properties":{}}},"blipId":"b+22A6jx4SB","childBlipIds":[],"contributors":["andyjpn@googlewave.com"],"creator":"andyjpn@googlewave.com","content":"\n","lastModifiedTime":1279206076677,"parentBlipId":null,"version":5,"waveId":"googlewave.com!w+22A6jx4SA","waveletId":"googlewave.com!conv+root","replyThreadIds":[],"threadId":null}},"threads":{},"robotAddress":"ruby-teacher.on-wave@appspot.com"}'
 
-    outgoing_json = JSON.parse(<<-'end_of_json')
+
+      #"message": "{\"rootBlipId\": \"b+22A6jx4SB\", \"creator\": \"andyjpn@googlewave.com\", \"blips\": {\"b+22A6jx4SB\": {\"blipId\": \"b+22A6jx4SB\", \"waveletId\": \"googlewave.com!conv+root\", \"elements\": {\"0\": {\"type\": \"LINE\", \"properties\": {}}}, \"contributors\": [\"andyjpn@googlewave.com\"], \"creator\": \"andyjpn@googlewave.com\", \"parentBlipId\": null, \"annotations\": [{\"range\": {\"start\": 0, \"end\": 1}, \"name\": \"conv/title\", \"value\": \"\"}], \"content\": \"\\n\", \"version\": 5, \"lastModifiedTime\": 1279206076677, \"childBlipIds\": [], \"waveId\": \"googlewave.com!w+22A6jx4SA\"}}, \"title\": \"\", \"creationTime\": 1279206076685, \"dataDocuments\": {}, \"waveletId\": \"googlewave.com!conv+root\", \"participants\": [\"ruby-teacher.on-wave@appspot.com\", \"andyjpn@googlewave.com\"], \"waveId\": \"googlewave.com!w+22A6jx4SA\", \"lastModifiedTime\": 1279206259104}"
+    message = JSON.parse("{\"rootBlipId\": \"b+22A6jx4SB\", \"creator\": \"andyjpn@googlewave.com\", \"blips\": {\"b+22A6jx4SB\": {\"blipId\": \"b+22A6jx4SB\", \"waveletId\": \"googlewave.com!conv+root\", \"elements\": {\"0\": {\"type\": \"LINE\", \"properties\": {}}}, \"contributors\": [\"andyjpn@googlewave.com\"], \"creator\": \"andyjpn@googlewave.com\", \"parentBlipId\": null, \"annotations\": [{\"range\": {\"start\": 0, \"end\": 1}, \"name\": \"conv/title\", \"value\": \"\"}], \"content\": \"\\\\n\", \"version\": 5, \"lastModifiedTime\": 1279206076677, \"childBlipIds\": [], \"waveId\": \"googlewave.com!w+22A6jx4SA\"}}, \"title\": \"\", \"creationTime\": 1279206076685, \"dataDocuments\": null, \"waveletId\": \"googlewave.com!conv+root\", \"participants\": [\"ruby-teacher.on-wave@appspot.com\", \"andyjpn@googlewave.com\"], \"waveId\": \"googlewave.com!w+22A6jx4SA\", \"lastModifiedTime\": 1279206259104}").to_json.gsub('"', '\"')#.gsub('\n', '\\n').sub('\"dataDocuments\":null', '\"dataDocuments\":{}')
+
+    outgoing_json = JSON.parse(<<-end_of_json)
 [
   {
     "params": {
@@ -54,7 +58,7 @@ describe Waveapi do
         "participants": ["ruby-teacher.on-wave@appspot.com", "andyjpn@googlewave.com"]
       }, 
       "waveId": "googlewave.com!TBD_0x54adc8d02194a0a4", 
-      "message": "{\"rootBlipId\": \"b+22A6jx4SB\", \"creator\": \"andyjpn@googlewave.com\", \"blips\": {\"b+22A6jx4SB\": {\"blipId\": \"b+22A6jx4SB\", \"waveletId\": \"googlewave.com!conv+root\", \"elements\": {\"0\": {\"type\": \"LINE\", \"properties\": {}}}, \"contributors\": [\"andyjpn@googlewave.com\"], \"creator\": \"andyjpn@googlewave.com\", \"parentBlipId\": null, \"annotations\": [{\"range\": {\"start\": 0, \"end\": 1}, \"name\": \"conv/title\", \"value\": \"\"}], \"content\": \"\\n\", \"version\": 5, \"lastModifiedTime\": 1279206076677, \"childBlipIds\": [], \"waveId\": \"googlewave.com!w+22A6jx4SA\"}}, \"title\": \"\", \"creationTime\": 1279206076685, \"dataDocuments\": {}, \"waveletId\": \"googlewave.com!conv+root\", \"participants\": [\"ruby-teacher.on-wave@appspot.com\", \"andyjpn@googlewave.com\"], \"waveId\": \"googlewave.com!w+22A6jx4SA\", \"lastModifiedTime\": 1279206259104}"
+      "message": "#{message}"
     }, 
     "method": "robot.createWavelet", 
     "id": "op1"
@@ -87,6 +91,13 @@ describe Waveapi do
 
     result_json = JSON.parse(robot.handle(incoming_json))
     result_json[0]['params']['capabilitiesHash'] = '0xd49798'
+    result_json[1]['params']['waveId'] = 'googlewave.com!TBD_0x54adc8d02194a0a4'
+    result_json[1]['params']['waveletData']['waveId'] = 'googlewave.com!TBD_0x54adc8d02194a0a4'
+    result_json[1]['params']['waveletData']['rootBlipId'] = 'TBD_googlewave.com!conv+root_0x16a17bc9e7c917f6'
+    result_json[2]['params']['waveId'] = 'googlewave.com!TBD_0x54adc8d02194a0a4'
+    result_json[2]['params']['blipId'] = 'TBD_googlewave.com!conv+root_0x16a17bc9e7c917f6'
+    result_json[3]['params']['waveId'] = 'googlewave.com!TBD_0x54adc8d02194a0a4'
+    result_json[3]['params']['blipId'] = 'TBD_googlewave.com!conv+root_0x16a17bc9e7c917f6'
     result_json.should eql(outgoing_json)
   end
 
