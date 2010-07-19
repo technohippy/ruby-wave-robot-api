@@ -23,11 +23,20 @@ module Waveapi
       @wave_service.new_wave(domain, participants, message, proxy_for_id, submit)
     end
 
+    def fetch_wavelet(wave_id, wavelet_id=nil, proxy_for_id=nil)
+      @wave_service.fetch_wavelet(wave_id, wavelet_id, proxy_for_id)
+    end
+
+    def blind_wavelet(json, proxy_for_id=nil)
+      @wave_service.blind_wavelet(json, proxy_for_id)
+    end
+
     def handle(json_str)
       puts "INCOMING:\n#{json_str}" if $DEBUG
       @context = Context.new(json_str, capabilities_hash)
 
       wavelet = @context.message_bundle.wavelet
+      wavelet.robot = self
       @context.message_bundle.events.each do |event|
         handlers = @event_table[event.class] || []
         handlers.each do |handler|

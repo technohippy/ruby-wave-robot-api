@@ -206,12 +206,22 @@ module Waveapi
     def self.class_type; 'GADGET' end
     
     def initialize(url, props={})
+      @private_properties = {}
       props['url'] = url
       super(self.class.class_type, props)
     end
 
     def keys
       @properties.keys - ['url']
+    end
+
+    def method_missing(name, *args, &block)
+      name = name.to_s
+      if name[-1] == ?=
+        @private_properties[name[0..-2]] = args.first
+      else
+        @private_properties[name]
+      end
     end
   end
 
@@ -236,7 +246,7 @@ module Waveapi
     end
 
     def self.from_props(props)
-      raise ArgumentError.new('Not Implemented Yet')
+      self.new(props['url'], props['width'], props['height'], props['attachmentId'], props['caption'])
     end
   end
 

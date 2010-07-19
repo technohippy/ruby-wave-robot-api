@@ -10,7 +10,7 @@ module Waveapi
     end
 
     def proxy_for(proxy_for_id)
-      res = self.new(@capabilities_hash)
+      res = self.class.new(@capabilities_hash)
       #res.queue = @queue.dup
       res.queue = @queue
       res.proxy_for_id = proxy_for_id

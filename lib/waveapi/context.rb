@@ -12,11 +12,10 @@ module Waveapi
       @operation_bundle = OperationBundle.new(capabilities_hash)
     end
 
-=begin
     def proxy_for(proxy_for_id)
-      self.class.new(@message_bundle, @operation_bundle.proxy_for(proxy_for_id))
+      @operation_bundle.proxy_for(proxy_for_id)
     end
-=end
+
     def address_for_proxy(proxy_for_id)
       @message_bundle.robot_address.sub('@', "+#{proxy_for_id}@")
     end

@@ -4,7 +4,8 @@ require 'waveapi/context'
 
 module Waveapi
   class MessageBundle
-    attr_reader :raw_data, :events, :wavelet, :blips, :robot_address
+    attr_reader :raw_data, :events, :wavelet, :robot_address
+    attr_accessor :blips
 
     def initialize(json_str, context)
       @context = context

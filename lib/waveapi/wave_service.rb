@@ -50,5 +50,29 @@ module Waveapi
       end
       created_wavelet
     end
+
+    def fetch_wavelet(wave_id, wavelet_id=nil, proxy_for_id=nil)
+      raise 'Not Yet' # TODO
+    end
+
+    def blind_wavelet(json, proxy_for_id=nil)
+      json = JSON.parse(json.gsub("\n", '\n')) if json.is_a?(String) # TODO
+      context = Context.new
+      context.proxy_for(proxy_for_id)
+      blips = Hash[*json['blips'].to_a.map{|k, v| [k, Blip.new(v, context)]}.flatten] # TODO: refactor
+      context.message_bundle.blips = blips
+      wavelet_from_json(json, context)
+    end
+
+    def wavelet_from_json(json, context)
+      blips = {}
+      threads = {}
+      threads_data = json['threads'] || []
+
+      # ちょっと中断
+      # TODO: ずいぶん違う・・・
+      Wavelet.new(json, context)
+
+    end
   end
 end

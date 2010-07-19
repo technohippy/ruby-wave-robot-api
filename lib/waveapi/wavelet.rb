@@ -2,8 +2,8 @@ require 'waveapi/operation'
 
 module Waveapi
   class Wavelet
-    attr_reader :wave_id, :wavelet_id, :creator, :creation_time, :participants, :root_blip, :context
-    attr_accessor :blips, :proxy_for_id
+    attr_reader :wave_id, :wavelet_id, :creator, :creation_time, :participants, :root_blip_id, :root_blip, :context
+    attr_accessor :blips, :proxy_for_id, :robot
 
     def initialize(json, context)
       @context = context
@@ -58,7 +58,7 @@ module Waveapi
       {
         "rootBlipId" => @root_blip_id,
         "creator" => @creator,
-        "blips" => Hash[*@blips.to_a.map{|k, v| [k, v.to_hashmap]}.flatten],
+        "blips" => Hash[*@blips.to_a.map{|k, v| [k, v.to_hashmap]}.flatten], # TODO: refactor
         "title" => @title,
         "creationTime" => @creation_time,
         "dataDocuments" => @data_document,

@@ -1,4 +1,5 @@
 require 'waveapi/util'
+require 'waveapi/element'
 require 'waveapi/annotation'
 require 'waveapi/participants'
 require 'waveapi/wave_service'
