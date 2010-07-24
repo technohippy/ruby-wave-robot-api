@@ -24,7 +24,7 @@ end
 
 robot.register_handler(Waveapi::WaveletCreatedEvent) do |event, wavelet|
   org_wavelet = wavelet.robot.blind_wavelet(event.message)
-  gadget = Gadget.new('http://kitchensinky.appspot.com/public/embed.xml') 
+  gadget = Waveapi::Gadget.new('http://kitchensinky.appspot.com/public/embed.xml') 
   gadget.waveid = wavelet.wave_id
   org_wavelet.root_blip.append(gadget)
   org_wavelet.root_blip.append("\nInserted a gadget: hello")
