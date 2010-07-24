@@ -28,6 +28,14 @@ module Waveapi
       @operation_bundle = nil
     end
 
+    def get(key, default=nil)
+      @properties[key.to_s] || default
+    end
+
+    def set(key, val)
+      @properties[key.to_s] = val
+    end
+
     def self.from_json(json)
       type = json['type']
       props = json['properties']
@@ -211,8 +219,17 @@ module Waveapi
       super(self.class.class_type, props)
     end
 
+    def url
+      @properties['url']
+    end
+
     def keys
       @properties.keys - ['url']
+    end
+
+    def self.from_props(props)
+      url = props.delete('url')
+      self.new(url, props)
     end
 
     def method_missing(name, *args, &block)

@@ -31,7 +31,6 @@ robot.register_handler(Waveapi::WaveletCreatedEvent) do |event, wavelet|
   org_wavelet.submit_with(wavelet)
 end
 
-=begin
 robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
   blip = event.blip
   gadget = blip.first(Gadget, :url => 'http://kitchensinky.appspot.com/public/embed.xml')
@@ -42,6 +41,5 @@ robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
   image = blip.first(Image)
   image.update_element('url' => 'http://www.google.com/logos/poppy09.gif')
 end
-=end
 
 robot.start

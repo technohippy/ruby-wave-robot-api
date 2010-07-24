@@ -1,10 +1,6 @@
 require 'waveapi'
 
 =begin
-{"events":[{"type":"WAVELET_CREATED","modifiedBy":"ruby-teacher.on-wave@appspot.com","timestamp":1279206259333,"properties":{"blipId":"b+03p1SLZkBBC","message":"{\"rootBlipId\": \"b+22A6jx4SB\", \"creator\": \"andyjpn@googlewave.com\", \"blips\": {\"b+22A6jx4SB\": {\"blipId\": \"b+22A6jx4SB\", \"waveletId\": \"googlewave.com!conv+root\", \"elements\": {\"0\": {\"type\": \"LINE\", \"properties\": {}}}, \"contributors\": [\"andyjpn@googlewave.com\"], \"creator\": \"andyjpn@googlewave.com\", \"parentBlipId\": null, \"annotations\": [{\"range\": {\"start\": 0, \"end\": 1}, \"name\": \"conv/title\", \"value\": \"\"}], \"content\": \"\\n\", \"version\": 5, \"lastModifiedTime\": 1279206076677, \"childBlipIds\": [], \"waveId\": \"googlewave.com!w+22A6jx4SA\"}}, \"title\": \"\", \"creationTime\": 1279206076685, \"dataDocuments\": {}, \"waveletId\": \"googlewave.com!conv+root\", \"participants\": [\"ruby-teacher.on-wave@appspot.com\", \"andyjpn@googlewave.com\"], \"waveId\": \"googlewave.com!w+22A6jx4SA\", \"lastModifiedTime\": 1279206259104}","waveId":"googlewave.com!w+03p1SLZkBBB","waveletId":"googlewave.com!conv+root"}}],"wavelet":{"creationTime":1279206259331,"lastModifiedTime":1279206259336,"version":0,"participants":["ruby-teacher.on-wave@appspot.com","andyjpn@googlewave.com"],"participantRoles":{"ruby-teacher.on-wave@appspot.com":"FULL","andyjpn@googlewave.com":"FULL"},"dataDocuments":{},"tags":[],"creator":"rusty@a.gwave.com","rootBlipId":"b+03p1SLZkBBC","title":"","waveId":"googlewave.com!w+03p1SLZkBBB","waveletId":"googlewave.com!conv+root","rootThread":null},"blips":{"b+03p1SLZkBBC":{"annotations":[{"name":"style/fontWeight","value":"bold","range":{"start":45,"end":54}}],"elements":{"0":{"type":"LINE","properties":{}},"36":{"type":"LINE","properties":{}}},"blipId":"b+03p1SLZkBBC","childBlipIds":[],"contributors":["ruby-teacher.on-wave@appspot.com"],"creator":"ruby-teacher.on-wave@appspot.com","content":"\nA new day and a new waveSome stuff!\nNot the beautiful","lastModifiedTime":1279206259336,"parentBlipId":null,"version":0,"waveId":"googlewave.com!w+03p1SLZkBBB","waveletId":"googlewave.com!conv+root","replyThreadIds":[],"threadId":null}},"threads":{},"robotAddress":"ruby-teacher.on-wave@appspot.com"}
-
-[{"params": {"capabilitiesHash": "0xd49798", "protocolVersion": "0.21"}, "method": "robot.notifyCapabilitiesHash", "id": "0"}]
-
   it 'wavelet.title=' do 
     robot = Waveapi::Robot.new('Test Robot')
     robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
@@ -22,6 +18,104 @@ require 'waveapi'
 =end
 
 describe Waveapi do
+  it 'Gadget' do 
+    robot = Waveapi::Robot.new('Test Robot')
+    robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
+      blip = event.blip
+      gadget = blip.first(Waveapi::Gadget, :url => 'http://kitchensinky.appspot.com/public/embed.xml')
+      if (gadget and gadget.get('loaded', 'no') == 'yes' and gadget.get('seen', 'no') == 'no') 
+        gadget.update_element('seen' => 'yes')
+      end
+      blip.append("\nSeems all to have worked out.")
+      image = blip.first(Waveapi::Image)
+      image.update_element('url' => 'http://www.google.com/logos/poppy09.gif')
+    end
+
+    incoming_json = '{"events":[{"type":"BLIP_SUBMITTED","modifiedBy":"andyjpn@googlewave.com","timestamp":1279557420217,"properties":{"blipId":"b+Vc2tsgj3B"}}],"wavelet":{"creationTime":1279557386693,"lastModifiedTime":1279557420217,"version":35,"participants":["andyjpn@googlewave.com","ruby-teacher.on-wave@appspot.com","ruby-teacher.on-wave+proxy@appspot.com"],"participantRoles":{"ruby-teacher.on-wave@appspot.com":"FULL","ruby-teacher.on-wave+proxy@appspot.com":"FULL","andyjpn@googlewave.com":"FULL"},"dataDocuments":{},"tags":[],"creator":"andyjpn@googlewave.com","rootBlipId":"b+Vc2tsgj3B","title":"A wavelet title","waveId":"googlewave.com!w+Vc2tsgj3A","waveletId":"googlewave.com!conv+root","rootThread":null},"blips":{"b+Vc2tsgj3B":{"annotations":[{"name":"conv/title","value":"","range":{"start":0,"end":17}},{"name":"lang","value":"en","range":{"start":0,"end":17}},{"name":"spell","value":"sp+sFOWYbZkLAZ\nf\nwa","range":{"start":3,"end":5}},{"name":"lang","value":"unknown","range":{"start":17,"end":20}},{"name":"lang","value":"en","range":{"start":20,"end":43}}],"elements":{"17":{"type":"LINE","properties":{}},"0":{"type":"LINE","properties":{}},"19":{"type":"GADGET","properties":{"loaded":"yes","first":"yes","url":"http://kitchensinky.appspot.com/public/embed.xml"}},"18":{"type":"IMAGE","properties":{"height":"118","width":"320","url":"http://www.google.com/logos/clickortreat1.gif"}},"20":{"type":"LINE","properties":{}},"5":{"type":"INLINE_BLIP","properties":{"id":"b+Wmrw0bZkBRT"}}},"blipId":"b+Vc2tsgj3B","childBlipIds":["b+Wmrw0bZkBRS","b+Wmrw0bZkBRT"],"contributors":["andyjpn@googlewave.com","ruby-teacher.on-wave@appspot.com"],"creator":"andyjpn@googlewave.com","content":"\nA wa velet title\n  \nInserted a gadget: абв","lastModifiedTime":1279557419668,"parentBlipId":null,"version":34,"waveId":"googlewave.com!w+Vc2tsgj3A","waveletId":"googlewave.com!conv+root","replyThreadIds":[],"threadId":null},"b+Wmrw0bZkBRS":{"annotations":[{"name":"lang","value":"en","range":{"start":0,"end":14}}],"elements":{"0":{"type":"LINE","properties":{}}},"blipId":"b+Wmrw0bZkBRS","childBlipIds":[],"contributors":["ruby-teacher.on-wave+proxy@appspot.com"],"creator":"ruby-teacher.on-wave+proxy@appspot.com","content":"\nhi from douwe","lastModifiedTime":1279557403568,"parentBlipId":"b+Vc2tsgj3B","version":13,"waveId":"googlewave.com!w+Vc2tsgj3A","waveletId":"googlewave.com!conv+root","replyThreadIds":[],"threadId":null},"b+Wmrw0bZkBRT":{"annotations":[{"name":"lang","value":"en","range":{"start":0,"end":13}}],"elements":{"0":{"type":"LINE","properties":{}}},"blipId":"b+Wmrw0bZkBRT","childBlipIds":[],"contributors":["ruby-teacher.on-wave@appspot.com"],"creator":"ruby-teacher.on-wave@appspot.com","content":"\nhello again!","lastModifiedTime":1279557403571,"parentBlipId":"b+Vc2tsgj3B","version":19,"waveId":"googlewave.com!w+Vc2tsgj3A","waveletId":"googlewave.com!conv+root","replyThreadIds":[],"threadId":null}},"threads":{},"robotAddress":"ruby-teacher.on-wave@appspot.com"}'
+
+    outgoing_json = JSON.parse(<<-'end_of_json')
+[
+  {
+    "params": {
+      "capabilitiesHash": "0x34df52e", 
+      "protocolVersion": "0.21"
+    }, 
+    "method": "robot.notifyCapabilitiesHash", 
+    "id": "0"
+  }, 
+  {
+    "params": {
+      "blipId": "b+Vc2tsgj3B", 
+      "waveletId": "googlewave.com!conv+root", 
+      "waveId": "googlewave.com!w+Vc2tsgj3A", 
+      "modifyAction": {
+        "modifyHow": "UPDATE_ELEMENT", 
+        "elements": [
+          {
+            "type": "GADGET", 
+            "properties": {"url": null, "seen": "yes"}
+          }
+        ]
+      }, 
+      "modifyQuery": {
+        "restrictions": {
+          "url": "http://kitchensinky.appspot.com/public/embed.xml"
+        }, 
+        "maxRes": 1, 
+        "elementMatch": "GADGET"
+      }
+    }, 
+    "method": "document.modify", 
+    "id": "op13"
+  }, 
+  {
+    "params": {
+      "blipId": "b+Vc2tsgj3B", 
+      "waveletId": "googlewave.com!conv+root", 
+      "waveId": "googlewave.com!w+Vc2tsgj3A", 
+      "modifyAction": {
+        "modifyHow": "INSERT_AFTER", 
+        "values": ["\nSeems all to have worked out."]
+      }
+    }, 
+    "method": "document.modify", 
+    "id": "op14"
+  }, 
+  {
+    "params": {
+      "blipId": "b+Vc2tsgj3B", 
+      "waveletId": "googlewave.com!conv+root", 
+      "waveId": "googlewave.com!w+Vc2tsgj3A", 
+      "modifyAction": {
+        "modifyHow": "UPDATE_ELEMENT", 
+        "elements": [
+          {
+            "type": "IMAGE", 
+            "properties": {"url": "http://www.google.com/logos/poppy09.gif"}
+          }
+        ]
+      }, 
+      "modifyQuery": {
+        "restrictions": {}, 
+        "maxRes": 1, 
+        "elementMatch": "IMAGE"
+      }
+    }, 
+    "method": "document.modify", 
+    "id": "op15"
+  }
+]
+    end_of_json
+
+    result_json = JSON.parse(robot.handle(incoming_json))
+    result_json[0]['params']['capabilitiesHash'] = '0x34df52e'
+    result_json[1]['id'] = 'op13'
+    result_json[1]['params']['modifyAction']['elements'][0]['properties']['url'] = nil
+    result_json[2]['id'] = 'op14'
+    result_json[3]['id'] = 'op15'
+    result_json.should eql(outgoing_json)
+  end
+
   it 'wavelet created event' do 
     robot = Waveapi::Robot.new('Test Robot')
     robot.register_handler(Waveapi::WaveletCreatedEvent) do |event, wavelet|

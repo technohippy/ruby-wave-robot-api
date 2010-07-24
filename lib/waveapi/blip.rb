@@ -3,7 +3,7 @@ require 'waveapi/util'
 
 module Waveapi
   class Blip
-    attr_reader :blip_id, :wave_id, :wavelet_id, :child_blip_ids, :contributors, :creator, :last_modified_time, :version, :parent_blip_id, :annotations, :context
+    attr_reader :context, :blip_id, :wave_id, :wavelet_id, :child_blip_ids, :content, :contributors, :creator, :last_modified_time, :version, :parent_blip_id, :elements, :annotations
     attr_accessor :proxy_for_id
 
     def initialize(json, context)
@@ -24,10 +24,14 @@ module Waveapi
       (@raw_json['annotations'] || []).each do |a|
         @annotations << Annotation.new(a['name'], a['value'], a['range']['start'], a['range']['end'])
       end
-      @elements = []
+      @elements = {}
       (@raw_json['elements'] || {}).each do |k, v|
         @elements[k.to_i] = Element.from_json(v)
       end
+    end
+
+    def size
+      @content.size
     end
 
     def child_blips
@@ -43,7 +47,8 @@ module Waveapi
     end
 
     def elements
-      @elements.values
+      #@elements.values
+      @elements
     end
 
     def size
@@ -79,19 +84,19 @@ module Waveapi
     end
 
     def all(findwhat=nil, maxres=nil, restrictions={})
-      BlipRefs.all(findwhat, maxres, restrictions)
+      BlipRefs.all(self, findwhat, maxres, restrictions)
     end
 
     def first(findwhat=nil, restrictions={})
-      BlipRefs.all(findwhat, 1, restrictions)
+      BlipRefs.all(self, findwhat, 1, restrictions)
     end
 
     def at(index)
-      BlipRefs.range(index..index + 1)
+      BlipRefs.range(self,index..index + 1)
     end
 
     def range(range_or_start, stop=nil)
-      BlipRefs.range(stop.nil? ? range_or_start : (range_or_start..stop))
+      BlipRefs.range(self, stop.nil? ? range_or_start : (range_or_start..stop))
     end
 
     def to_hashmap
@@ -174,7 +179,7 @@ module Waveapi
       {
         "blipId" => @blip_id,
         "waveletId" => @wavelet_id,
-        "elements" => Hash[*@elements.inject([]){|s, v| s << [s.size, v.to_hashmap]}.flatten],
+        "elements" => @elements,
         "contributors" => @contributors,
         "creator" => @creator,
         "parentBlipId" => @parent_blip_id,

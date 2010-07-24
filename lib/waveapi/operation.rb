@@ -199,13 +199,14 @@ module Waveapi
   end
 
   class DocumentModifyOperation < Operation
-    def initialize(wave_id, wavelet_id, blip_id, modify_action, proxy_for_id=nil)
+    def initialize(wave_id, wavelet_id, blip_id, modify_action, opts={})
       @method = 'document.modify'
       @wave_id = wave_id
       @wavelet_id = wavelet_id
       @blip_id = blip_id
       @modify_action = modify_action
-      @proxy_for_id = proxy_for_id
+      @modify_query = opts[:query]
+      @proxy_for_id = opts[:proxy_for_id]
     end
 
     def params
@@ -216,6 +217,7 @@ module Waveapi
         'modifyAction' => @modify_action.to_hashmap
       }
       ret['proxyingFor'] = @proxy_for_id if @proxy_for_id
+      ret['modifyQuery'] = @modify_query.to_hashmap if @modify_query
       ret
     end
   end
@@ -277,6 +279,10 @@ module Waveapi
       self.new(INSERT_AFTER, elements)
     end
 
+    def self.update_element(type, properties)
+      self.new(UPDATE_ELEMENT, 'type' => type.class_type, 'properties' => properties)
+    end
+
     def initialize(modify_how, elements)
       @modify_how = modify_how
       elements = [elements] unless elements.is_a?(Array)
@@ -289,12 +295,47 @@ module Waveapi
 
     def to_hashmap
       hash = {'modifyHow' => @modify_how}
+=begin
       if @elements
         hash['elements'] = @elements.map{|e| e.to_hashmap}
       elsif @values
         hash['values'] = @values.map{|v| v.to_hashmap}
       end
+=end
+      if @elements
+        hash['elements'] = @elements.map{|e| e.to_hashmap}
+      elsif @values
+        if @modify_how == UPDATE_ELEMENT
+          hash['elements'] = @values.map{|e| e.to_hashmap}
+        else
+          hash['values'] = @values.map{|e| e.to_hashmap}
+        end
+      end
       hash
+    end
+
+    def to_json
+      self.to_hashmap.to_json
+    end
+  end
+
+  class ModifyQuery
+    def initialize(blip_ref)
+      @blip_ref = blip_ref
+    end
+
+    def to_hashmap
+      query = nil
+      unless @blip_ref.findwhat.nil?
+        query = {'maxRes' => @blip_ref.maxres}
+        if @blip_ref.findwhat.kind_of?(String)
+          query['textMatch'] = findwhat
+        else
+          query['elementMatch'] = @blip_ref.findwhat.class_type
+          query['restrictions'] = @blip_ref.restrictions
+        end
+      end
+      query
     end
 
     def to_json
