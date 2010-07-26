@@ -2,7 +2,7 @@ require 'waveapi'
 
 =begin
   it 'wavelet.title=' do 
-    robot = Waveapi::Robot.new('Test Robot')
+    robot = Waveapi::Robot.new('Test Robot', :debug=>false)
     robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
       wavelet.reply("hello")
     end
@@ -18,8 +18,29 @@ require 'waveapi'
 =end
 
 describe Waveapi do
+
+  it 'wavelet created event 2' do 
+    robot = Waveapi::Robot.new('Test Robot', :debug=>false)
+    robot.register_handler(Waveapi::WaveletCreatedEvent) do |event, wavelet|
+      org_wavelet = wavelet.robot.blind_wavelet(event.message)
+      gadget = Waveapi::Gadget.new('http://kitchensinky.appspot.com/public/embed.xml') 
+      gadget.waveid = wavelet.wave_id
+      org_wavelet.root_blip.append(gadget)
+      org_wavelet.root_blip.append("\nInserted a gadget: hello")
+      org_wavelet.submit_with(wavelet)
+    end
+
+    incoming_json = '{"events":[{"type":"WAVELET_CREATED","modifiedBy":"ruby-wave-robot-api@googlewaverobots.com","timestamp":1280161814447,"properties":{"blipId":"b+yGNV2rZkB_f","message":"#\u003cWaveapi::Wavelet:0x2b60a5274968\u003e","waveId":"wavesandbox.com!w+yGNV2rZkB_e","waveletId":"wavesandbox.com!conv+root"}}],"wavelet":{"creationTime":1280161814446,"lastModifiedTime":1280161814499,"version":0,"participants":["ruby-wave-robot-api@googlewaverobots.com","technohippy@wavesandbox.com"],"participantRoles":{"technohippy@wavesandbox.com":"FULL","ruby-wave-robot-api@googlewaverobots.com":"FULL"},"dataDocuments":{},"tags":[],"creator":"rusty@a.gwave.com","rootBlipId":"b+yGNV2rZkB_f","title":"","waveId":"wavesandbox.com!w+yGNV2rZkB_e","waveletId":"wavesandbox.com!conv+root","rootThread":null},"blips":{"b+yGNV2rZkB_f":{"annotations":[{"name":"style/fontWeight","value":"bold","range":{"start":45,"end":54}}],"elements":{"0":{"type":"LINE","properties":{}},"36":{"type":"LINE","properties":{}}},"blipId":"b+yGNV2rZkB_f","childBlipIds":[],"contributors":["ruby-wave-robot-api@googlewaverobots.com"],"creator":"ruby-wave-robot-api@googlewaverobots.com","content":"\nA new day and a new waveSome stuff!\nNot the beautiful","lastModifiedTime":1280161814499,"parentBlipId":null,"version":0,"waveId":"wavesandbox.com!w+yGNV2rZkB_e","waveletId":"wavesandbox.com!conv+root","replyThreadIds":[],"threadId":null}},"threads":{},"robotAddress":"ruby-wave-robot-api@googlewaverobots.com"}'
+
+    outgoing_json = JSON.parse('{"dummy":1}')
+
+    result_json = JSON.parse(robot.handle(incoming_json))
+    result_json[0]['params']['capabilitiesHash'] = ''
+    result_json.should eql(outgoing_json)
+  end
+
   it 'Gadget' do 
-    robot = Waveapi::Robot.new('Test Robot')
+    robot = Waveapi::Robot.new('Test Robot', :debug=>false)
     robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
       blip = event.blip
       gadget = blip.first(Waveapi::Gadget, :url => 'http://kitchensinky.appspot.com/public/embed.xml')
@@ -117,7 +138,7 @@ describe Waveapi do
   end
 
   it 'wavelet created event' do 
-    robot = Waveapi::Robot.new('Test Robot')
+    robot = Waveapi::Robot.new('Test Robot', :debug=>false)
     robot.register_handler(Waveapi::WaveletCreatedEvent) do |event, wavelet|
       org_wavelet = wavelet.robot.blind_wavelet(event.message)
       gadget = Waveapi::Gadget.new('http://kitchensinky.appspot.com/public/embed.xml') 
@@ -139,7 +160,7 @@ describe Waveapi do
   end
 
   it 'new_wave' do 
-    robot = Waveapi::Robot.new('Test Robot')
+    robot = Waveapi::Robot.new('Test Robot', :debug=>false)
     robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
       new_wave = robot.new_wave(wavelet.domain, wavelet.participants, wavelet.to_json)
       new_wave.root_blip.append('A new day and a new wave')
@@ -217,7 +238,7 @@ describe Waveapi do
   end
 
   it 'participants changed' do 
-    robot = Waveapi::Robot.new('Test Robot')
+    robot = Waveapi::Robot.new('Test Robot', :debug=>false)
     robot.register_handler(Waveapi::WaveletParticipantsChangedEvent) do |event, wavelet|
       new_participants = event.participants_added
       new_participants.each do |new_participant|
@@ -236,7 +257,7 @@ describe Waveapi do
   end
 
   it 'inline_blip.append' do 
-    robot = Waveapi::Robot.new('Test Robot')
+    robot = Waveapi::Robot.new('Test Robot', :debug=>false)
     robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
       blip = event.blip
       inline_blip = blip.insert_inline_blip(5)
@@ -256,7 +277,7 @@ describe Waveapi do
   end
 
   it 'wavelet.proxy_for.reply.append' do 
-    robot = Waveapi::Robot.new('Test Robot')
+    robot = Waveapi::Robot.new('Test Robot', :debug=>false)
     robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
       wavelet.proxy_for('douwe').reply().append('hi from douwe')
     end
@@ -273,7 +294,7 @@ describe Waveapi do
   end
 
   it 'blip.append(Image)' do 
-    robot = Waveapi::Robot.new('Test Robot')
+    robot = Waveapi::Robot.new('Test Robot', :debug=>false)
     robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
       event.blip.append(Waveapi::Image.new('http://www.google.com/logos/clickortreat1.gif', 320, 118))
     end
@@ -288,7 +309,7 @@ describe Waveapi do
   end
 
   it 'wavelet.title=' do 
-    robot = Waveapi::Robot.new('Test Robot')
+    robot = Waveapi::Robot.new('Test Robot', :debug=>false)
     robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
       wavelet.title = 'A wavelet title'
     end
@@ -303,7 +324,7 @@ describe Waveapi do
   end
 
   it 'wavelet.reply' do
-    robot = Waveapi::Robot.new('Test Robot')
+    robot = Waveapi::Robot.new('Test Robot', :debug=>false)
     robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
       wavelet.reply("hello")
     end
