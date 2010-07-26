@@ -36,7 +36,7 @@ module Waveapi
       when String; # do nothing
       when Hash;   message = message.to_json
       when JSON;   message = message.to_s
-      else;        raise ArgumentError.new('Invalid message type')
+      else;        raise ArgumentError.new("Invalid message type: #{message.class.name}")
       end
       blip_data, wavelet_data = self.class.new_wavelet_data(domain, participants)
       operation = RobotCreateWaveletOperation.new(wavelet_data['waveId'], 

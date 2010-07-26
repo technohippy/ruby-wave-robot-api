@@ -239,7 +239,7 @@ module Waveapi
         #'waveletId' => @wavelet_id,
         'waveletData' => @wavelet_data
       }
-      ret['message'] = @message.to_s if @message
+      ret['message'] = @message if @message
       ret['waveletId'] = @wavelet_id
       ret
     end
