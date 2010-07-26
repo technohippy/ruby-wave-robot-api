@@ -7,7 +7,7 @@ require 'waveapi/context'
 
 module Waveapi
   class Robot
-    attr_accessor :verify_token, :operation_bundle
+    attr_accessor :verify_token, :operation_bundle, :debug
 
     def initialize(name, opts={})
       @name = name
@@ -17,6 +17,7 @@ module Waveapi
       @profile_url = opts[:profile_url] || 'http://example.com/profile.png'
       @event_table = {}
       @wave_service = WaveService.new
+      @debug = opts.has_key?(:debug) ? opts[:debug] : true
     end
 
     def new_wave(domain, participants=[], message='', proxy_for_id=nil, submit=false)
@@ -32,7 +33,7 @@ module Waveapi
     end
 
     def handle(json_str)
-      puts "INCOMING:\n#{json_str}" if $DEBUG
+      puts "INCOMING:\n#{json_str}" if @debug
       @context = Context.new(json_str, capabilities_hash)
 
       wavelet = @context.message_bundle.wavelet
@@ -44,7 +45,7 @@ module Waveapi
         end
       end
 
-      puts "OUTGOING:\n#{@context.operation_bundle.to_json}" if $DEBUG
+      puts "OUTGOING:\n#{@context.operation_bundle.to_json}" if @debug
       @context.operation_bundle.to_json
     end
 

@@ -36,9 +36,11 @@ robot.register_handler(Waveapi::BlipSubmittedEvent) do |event, wavelet|
   gadget = blip.first(Waveapi::Gadget, :url => 'http://kitchensinky.appspot.com/public/embed.xml')
   if (gadget and gadget.get('loaded', 'no') == 'yes' and gadget.get('seen', 'no') == 'no') 
     gadget.update_element('seen' => 'yes')
-    blip.append("\nSeems all to have worked out.")
+    blip.append("\nThe gadget worked.")
+
     image = blip.first(Waveapi::Image)
     image.update_element('url' => 'http://www.google.com/logos/poppy09.gif')
+    blip.append("\nThe image worked -look for a poppy.")
   end
 end
 
