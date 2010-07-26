@@ -206,7 +206,7 @@ module Waveapi
 
   class WaveletCreatedEvent < Event
     def self.type
-      "WAVELET_CREATED"
+      'WAVELET_CREATED'
     end
 
     attr_reader :message
