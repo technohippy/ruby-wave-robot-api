@@ -9,29 +9,33 @@ This library allows you to develop a wave robot with Ruby language and to run it
 Note
 ----
 
-This library is under construction. The sample in this file is the only code I've confirmed to work.
+This library is under construction. Files in the examples directory are the only codes I've confirmed to work.
 
 * Events
+  * WaveletCreated
   * WaveletSelfAdded
   * WaveletParticipantsChanged
   * BlipSubmitted
-* Action
+* Actions
   * blip.append
+  * blip.first
   * blip.insert_inline_blip
+  * blip_ref.update_element
   * wavelet.reply
   * wavelet.proxy_for
   * wavelet.append_markup
   * wavelet.submit_with
   * robot.new_wave
+* Elements
+  * Image
+  * Gadget
 
 How to try the sample on [Heroku](http://code.google.com/intl/ja/apis/wave/extensions/robots/registration.html)
 -------------------------------
 
 1. Register your robot's domain in accordance with:
    [http://code.google.com/intl/ja/apis/wave/extensions/robots/registration.html](http://code.google.com/intl/ja/apis/wave/extensions/robots/registration.html)
-
 2. Push all files to your heroku repository
-
 3. Add your robot to a wave as a participant
 
 Sample
