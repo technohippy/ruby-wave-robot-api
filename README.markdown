@@ -30,7 +30,7 @@ This library is under construction. Files in the examples directory are the only
   * Image
   * Gadget
 
-How to try the sample on [Heroku](http://code.google.com/intl/ja/apis/wave/extensions/robots/registration.html)
+How to try the sample on [Heroku](http://heroku.com)
 -------------------------------
 
 1. Register your robot's domain in accordance with:
