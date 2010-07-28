@@ -7,7 +7,7 @@ robot = Waveapi::Robot.new(
   'Ruby Tutorial', 
   :base_url => '/sample-robot', 
   :image_url => 'http://ruby-wave-robot.heroku.com/images/icon.png',
-  :profile_url => 'http://ruby-wave-robot-api.heroku.com'
+  :profile_url => 'http://github.com/technohippy/ruby-wave-robot-api'
 )
 
 robot.register_handler(Waveapi::WaveletSelfAddedEvent) do |event, wavelet|
